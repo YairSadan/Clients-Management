@@ -6,10 +6,4 @@
 	.page-primary {
 		@apply flex min-h-screen flex-col items-center w-full;
 	}
-	.title-primary {
-		@apply text-tertiary font-extrabold text-3xl text-center;
-	}
-	.btn-primary {
-		@apply border-2 border-accent bg-secondary rounded-lg p-2 w-48;
-	}
 }

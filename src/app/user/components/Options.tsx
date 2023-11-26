@@ -1,11 +1,13 @@
+'use client'
+import Button from "@/app/ui/globalComponents/button";
 import React from "react";
 
 const Options = () => {
 	return (
 		<>
-			<button className="btn-primary">לקבוע/לבטל תור</button>
-			<button className="btn-primary">לשלם</button>
-			<button className="btn-primary">לערוך פרטים אישיים</button>
+			<Button text="לקבוע/לבטל תור" onClick={()=> {}}/>
+			<Button text="לשלם" onClick={()=> {}}/>
+			<Button text="לערוך פרטים אישיים" onClick={()=> {}}/>
 		</>
 	);
 };

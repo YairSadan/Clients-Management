@@ -1,3 +1,5 @@
+'use client';
+import Button from "@/app/ui/globalComponents/button";
 import React from "react";
 
 const LoginForm = () => {
@@ -8,9 +10,7 @@ const LoginForm = () => {
 				placeholder="טלפון:"
 				className="btn-primary placeholder-tertiary-700"
 			/>
-			<button type="submit" className="btn-primary">
-				שלח קוד אימות
-			</button>
+            <Button text="שלח קוד אימות" onClick={() => {}} />
 		</>
 	);
 };
