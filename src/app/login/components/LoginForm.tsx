@@ -8,7 +8,7 @@ const LoginForm = () => {
 			<input
 				type="text"
 				placeholder="טלפון:"
-				className="btn-primary placeholder-tertiary-700"
+				className="border-2 border-accent bg-secondary rounded-lg p-2 w-48 placeholder-tertiary-700"
 			/>
             <Button text="שלח קוד אימות" onClick={() => {}} />
 		</>
