@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 @layer components {
+	.page-primary {
+		@apply flex min-h-screen flex-col items-center;
+	}
+	.title-primary {
+		@apply text-tertiary font-extrabold text-3xl text-center;
+	}
 	.btn-primary {
-		@apply border-2 border-accent bg-secondary rounded-lg p-2;
+		@apply border-2 border-accent bg-secondary rounded-lg p-2 w-2/5;
 	}
 }

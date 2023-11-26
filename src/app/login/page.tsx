@@ -1,13 +1,14 @@
-import LoginForm from "./components/LoginForm"
-
+import LoginForm from "./components/LoginForm";
 
 const Login = () => {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className='text-tertiary font-extrabold text-3xl text-center'>ברוכים הבאים</h1>
-      <LoginForm />
-    </main>
-  )
-}
+	return (
+		<main className="page-primary p-24">
+			<h1 className="title-primary">ברוכים הבאים</h1>
+			<div className="w">
+				<LoginForm />
+			</div>
+		</main>
+	);
+};
 
-export default Login
+export default Login;
