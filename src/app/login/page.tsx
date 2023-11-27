@@ -1,4 +1,4 @@
-import Title from '../ui/globalComponents/title';
+import Title from '../ui/globalComponents/Title';
 import LoginForm from './components/LoginForm';
 
 const Login = () => {

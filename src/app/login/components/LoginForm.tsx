@@ -1,18 +1,13 @@
 'use client';
-import Button from "@/app/ui/globalComponents/button";
-import React from "react";
-
+import Button from '@/app/ui/globalComponents/Button'
+import React from 'react';
+import { signIn } from 'next-auth/react';
 const LoginForm = () => {
-	return (
-		<>
-			<input
-				type="text"
-				placeholder="טלפון:"
-				className="border-2 border-accent bg-secondary rounded-lg p-2 w-48 placeholder-tertiary-700"
-			/>
-            <Button text="שלח קוד אימות" onClick={() => {}} />
-		</>
-	);
+  return (
+    <>
+		  <Button text="התחבר באמצעות גוגל" onClick={() => signIn('google', { callbackUrl: '/user' })} /> {/* TODO: add callbackUrl for admin */ }
+    </>
+  );
 };
 
 export default LoginForm;
