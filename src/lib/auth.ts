@@ -24,7 +24,8 @@ export const authOptions: NextAuthOptions = {
         console.log('not admin');
         return true;
       }
-        return false;
+      //TODO: add a page to prompt the user to ask for access
+      return false;
     },
     session: ({ session, token }) => {
       return {
