@@ -1,5 +1,5 @@
 'use client'
-import Button from "@/app/ui/globalComponents/button";
+import Button from "@/app/ui/globalComponents/Button";
 import React from "react";
 
 const Options = () => {
