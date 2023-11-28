@@ -1,9 +1,39 @@
-import React from 'react'
+import Title from '@/app/ui/globalComponents/Title';
+import React from 'react';
+import PayBtn from '../components/PayBtn';
+import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
+import Dialog from '@/app/ui/globalComponents/Dialog';
 
-const page = () => {
+const UserPayment = () => {
+  async function onClose() {
+    'use server';
+    console.log('Modal has closed');
+  }
+  async function onOk() {
+    'use server';
+    console.log('ok was clicked');
+  }
+
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <Dialog title="" onClose={onClose} onOk={onOk}>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim porro
+          fugiat, iure temporibus voluptate at dolor voluptatem tempore non
+          alias sunt. Quia aperiam quibusdam sit placeat vitae recusandae,
+          tempora modi!
+        </p>
+      </Dialog>
 
-export default page
+      <HomeSvg />
+      <main className="page-primary justify-around">
+        <div className="flex flex-row justify-start w-full">
+          <Title className="pr-8" text="החוב שלך: מלא כסף₪" />
+        </div>
+        <PayBtn />
+      </main>
+    </>
+  );
+};
+
+export default UserPayment;
