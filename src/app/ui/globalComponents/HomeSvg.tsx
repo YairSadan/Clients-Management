@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 const HomeSvg = () => {
+  //TODO: add functionality based on role
   const session = useSession();
   let urlToRedirect = '/user';
   if (session.data?.user?.email === 'yairsadan1@gmail.com') {
