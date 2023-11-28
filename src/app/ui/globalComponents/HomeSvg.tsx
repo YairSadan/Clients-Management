@@ -6,7 +6,7 @@ import React from 'react';
 const HomeSvg = () => {
   const session = useSession();
   let urlToRedirect = '/user';
-  if (session.data?.user?.email === 'yairsadan@gmail.com') {
+  if (session.data?.user?.email === 'yairsadan1@gmail.com') {
     urlToRedirect = '/admin';
   }
   return (
