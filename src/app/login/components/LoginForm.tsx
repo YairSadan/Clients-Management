@@ -16,7 +16,7 @@ const LoginForm = () => {
       // Update the redirect function to use router.push
       else if (session.user?.email !== null)
         router.push('/user'); // Update the redirect function to use router.push
-      else router.push('/login');
+      else throw new Error;
     }
   }, [status, router, session?.user?.email]); // Add router to the dependency array
 
