@@ -1,6 +1,13 @@
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
 import type { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { GoogleProfile } from 'next-auth/providers/google';
+
+const prisma = new PrismaClient();
+
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   pages: {
     signIn: '/login',
   },
@@ -9,44 +16,36 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GoogleProvider({
+      profile(profile: GoogleProfile) {
+        return {
+          role: 'user', //TODO: add a role to the user
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+        };
+      },
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
   callbacks: {
-    signIn: async ({ user, account, profile, email, credentials }) => {
-      if (user?.email === 'yairsadan1@gmail.com') {
-        // user.role = 'admin';
-        console.log('adminnnnn');
-        return true;
-      } else if (user?.email === 'eliezerrules@gmail.com') {
-        // check if its part of the db emails)
-        console.log('not admin');
+    async signIn({ user }) {
+      if (await prisma.user.findUnique({ where: { id: user.id } })) { // TODO: check if this is a good practice cause it might be a security issue
         return true;
       }
       //TODO: add a page to prompt the user to ask for access
       return false;
     },
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-          rendomKey: token.rendomKey,
-        },
-      };
+    async session({ session, token }) {
+      if (session.user) session.user.role = token.role;
+      return session;
     },
-    jwt: ({ token, user }) => {
+    async jwt({ token, user }) {
       if (user) {
-        const u = user as unknown as any;
-        return {
-          ...token,
-          id: u.id,
-          rendomKey: u.rendomKey,
-        };
+        token.role = user.role;
       }
       return token;
-    },
+    },      
   },
 };
