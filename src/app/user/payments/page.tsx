@@ -21,7 +21,7 @@ const UserPayment = () => {
       </Dialog>
 
       <main className="page-primary justify-around">
-        <HomeSvg />
+      <HomeSvg />
         <div className="flex flex-row justify-start w-full">
           <Title className="pr-8" text="החוב שלך: מלא כסף₪" />
         </div>
