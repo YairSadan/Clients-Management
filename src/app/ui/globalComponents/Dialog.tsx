@@ -1,6 +1,7 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
+import XMarkSvg from './XMarkSvg';
 
 type Props = {
   title: string;
@@ -41,7 +42,7 @@ const Dialog = ({ title, onOk, children }: Props) => {
           <button
             className="mr-1 mt-1 px-2 rounded-xl bg-accent"
             onClick={closeDialog}>
-            X
+            <XMarkSvg className='h-5 w-5'/>
           </button>
           <h1 className="flex justify-center font-bold text-2xl">
             <u>{title}</u>
