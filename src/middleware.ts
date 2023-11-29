@@ -3,8 +3,6 @@ import { NextResponse } from 'next/server';
 
 export default withAuth(
   function middleware(req: NextRequestWithAuth) {
-    console.log(req.nextUrl.pathname);
-        console.log(req.nextauth.token);
         if (req.nextUrl.pathname.startsWith('/admin') && req.nextauth.token?.role !== 'admin') {
             return NextResponse.rewrite(new URL('/user', req.url))
         }
