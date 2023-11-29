@@ -18,7 +18,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       profile(profile: GoogleProfile) {
         return {
-          role: 'user', //TODO: add a role to the user
+          role: 'user',
           id: profile.sub,
           name: profile.name,
           email: profile.email,
