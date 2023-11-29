@@ -10,7 +10,7 @@ const HomeSvg = () => {
     urlToRedirect = '/admin';
   }
   return (
-    <Link href={urlToRedirect} className="inline-block">
+    <Link href={urlToRedirect} className="inline-block absolute top-2 right-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

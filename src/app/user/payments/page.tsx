@@ -20,10 +20,10 @@ const UserPayment = () => {
         <p>בטוח?</p>
       </Dialog>
 
-      <HomeSvg />
       <main className="page-primary justify-around">
+        <HomeSvg />
         <div className="flex flex-row justify-start w-full">
-          <Title text="החוב שלך: מלא כסף₪" />
+          <Title className="pr-8" text="החוב שלך: מלא כסף₪" />
         </div>
         <PayBtn />
       </main>
