@@ -7,7 +7,7 @@ const ClientHome = () => {
   return (
     <main className="page-primary justify-around">
       <div className="flex flex-row justify-start w-full">
-        <Title className="pr-8" text="שלום חבר" />
+        <Title text="שלום חבר" />
       </div>
       <div className="flex flex-col items-center gap-3">
         <Title className="pb-2" text="מה תרצה לעשות?" />

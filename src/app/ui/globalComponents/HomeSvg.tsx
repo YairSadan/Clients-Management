@@ -7,11 +7,11 @@ const HomeSvg = () => {
   //TODO: add functionality based on role
   const session = useSession();
   let urlToRedirect = '/user';
-  if (session.data?.user?.email === 'yairsadan@gmail.com') {
+  if (session.data?.user?.email === 'yairsadan1@gmail.com') {
     urlToRedirect = '/admin';
   }
   return (
-    <Link href={urlToRedirect} className="inline-block m-5">
+    <Link href={urlToRedirect} className="inline-block">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

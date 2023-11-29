@@ -8,10 +8,16 @@ export const metadata: Metadata = {
   description: 'Created by Yair Sadan',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="he">
-      <body className={`${rubik.className} antialiased bg-primary`} dir="rtl">
+      <body
+        className={`${rubik.className} antialiased bg-primary p-8`}
+        dir="rtl">
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
