@@ -1,10 +1,8 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import type { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { GoogleProfile } from 'next-auth/providers/google';
-
-const prisma = new PrismaClient();
+import prisma from './prisma';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -31,7 +29,8 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user }) {
-      if (await prisma.user.findUnique({ where: { id: user.id } })) { // TODO: check if this is a good practice cause it might be a security issue
+      if (!user.email) return false; //TODO: check for a better way to handle this
+      if (await prisma.user.findUnique({ where: { id: user.id } }) || await prisma.emailsPoos.findUnique({ where: {email: user.email}})) { // TODO: check if this is a good practice cause it might be a security issue
         return true;
       }
       //TODO: add a page to prompt the user to ask for access
