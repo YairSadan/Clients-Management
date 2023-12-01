@@ -45,6 +45,11 @@ model User {
   sessions Session[]
 }
 
+model AuthrizedPool {
+  email String @id
+  phone String @unique
+}
+
 model VerificationToken {
   identifier String 
   token String @unique
