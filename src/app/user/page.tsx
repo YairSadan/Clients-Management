@@ -9,7 +9,7 @@ const ClientHome = async () => {
   const session = await getServerSession(authOptions);
   return (
     <main className="page-primary justify-around">
-      <div className="flex flex-row justify-start w-full">
+      <div className="flex flex-row justify-start w-full pr-8">
         <Title text={`שלום ${session?.user.name}`} />
       </div>
       <div className="flex flex-col items-center gap-3">
