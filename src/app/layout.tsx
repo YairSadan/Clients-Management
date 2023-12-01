@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="he">
       <body
-        className={`${rubik.className} antialiased bg-primary p-8`}
+        className={`${rubik.className} antialiased bg-primary `}
         dir="rtl">
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
