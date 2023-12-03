@@ -1,5 +1,5 @@
 'use client';
-import Button from '@/app/ui/globalComponents/Button';
+import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -8,14 +8,13 @@ const Options = () => {
 
   return (
     <>
-      <Button text="לקבוע/לבטל תור" onClick={() => {}} />
-      <Button
-        text="לשלם"
+      <Button size={'optionButton'} onClick={() => {}}>לקבוע/לבטל תור</Button>
+      <Button size={'optionButton'}
         onClick={() => {
           router.push('/user/payments');
         }}
-      />
-      <Button text="לערוך פרטים אישיים" onClick={() => {}} />
+      >לשלם</Button>
+      <Button size={'optionButton'} onClick={() => {}}>לערוך פרטים אישיים</Button>
     </>
   );
 };
