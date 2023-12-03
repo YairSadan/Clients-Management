@@ -1,12 +1,12 @@
 'use client';
-import Button from '@/app/ui/globalComponents/Button';
 import React from 'react';
 import { signIn } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
 
 const LoginForm = () => {
   return (
     <>
-      <Button text="התחבר באמצעות גוגל" onClick={() => signIn('google', {callbackUrl: '/user'})} />
+      <Button size={'lg'} onClick={() => signIn('google', { callbackUrl: '/user' })}>התחבר</Button>
       {/* TODO: add callbackUrl for admin */}
     </>
   );

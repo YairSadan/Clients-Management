@@ -1,14 +1,14 @@
 "use client";
-import Button from "@/app/ui/globalComponents/Button";
+import { Button } from "@/components/ui/button";
 import React from "react";
 
 const AdminOptions = () => {
 	return (
 		<>
-			<Button text="להוסיף לקוח" onClick={() => {}} />
-			<Button text="לערוך לוח זמנים" onClick={() => {}} />
-			<Button text="לנהל תשלומים" onClick={() => {}} />
-			<Button text="הודעות" onClick={() => {}} />
+			<Button size={"optionButton"} onClick={() => {}}>לקוחות</Button>
+			<Button size={"optionButton"} onClick={() => {}}>לוח זמנים</Button>
+			<Button size={"optionButton"} onClick={() => {}}>תשלומים</Button>
+			<Button size={"optionButton"} onClick={() => {}}>הודעות</Button>
 		</>
 	);
 };
