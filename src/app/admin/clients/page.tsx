@@ -12,18 +12,33 @@ import Link from 'next/link';
 import React from 'react';
 import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
-
+import prisma from '@/lib/prisma';
+const addClient = async (values: any) => {
+  'use server';
+  await prisma?.authrizedPool.create({
+    data: {
+      name: values.username,
+      phone: values.phone,
+      email: values.email,
+      pricePerAppointment: values.pricePerAppointment,
+      fundingSource: values.fundingSource,
+      notes: values.notes,
+    },
+  });
+};
 const ClientsManager = () => {
   return (
     <main className="page-primary justify-center gap-16">
       <SearchClients />
       <Dialog>
-        <DialogTrigger>הוספת לקוח</DialogTrigger>
-        <DialogContent>
+        <DialogTrigger asChild><Button>הוספת לקוח</Button></DialogTrigger>
+        <DialogContent className="w-4/5">
           <DialogHeader>
-            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+            <DialogTitle className="text-center">
+              הכנס את פרטי הלקוח
+            </DialogTitle>
             <DialogDescription>
-              <AddClientForm />
+              <AddClientForm addClient={addClient} />
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
