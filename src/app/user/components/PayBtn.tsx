@@ -1,5 +1,5 @@
 'use client';
-import Button from '@/app/ui/globalComponents/Button';
+import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -8,11 +8,10 @@ const PayBtn = () => {
 
   return (
     <Button
-      text="למעבר לתשלום"
       onClick={() => {
         router.push('?showDialog=y');
       }}
-    />
+    >לתשלום</Button>
   );
 };
 
