@@ -53,7 +53,6 @@ const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
       <>
         {/* Backdrop overlay - to make the screen go dark*/}
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 backdrop-brightness-50"></div>
-
         <dialog
           ref={dialogRef}
           className="flex flex-col justify-center gap-2 py-3 text-center px-5 rounded-lg bg-primary">

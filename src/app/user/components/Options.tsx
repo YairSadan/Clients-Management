@@ -9,11 +9,9 @@ const Options = () => {
   return (
     <>
       <Button
-        size={'optionButton'}
-        onClick={() => {
-          router.push('/user/appointments');
-        }}>
-        לקבוע/לבטל תור
+        size={'optionButton'} asChild>
+        <Link href='/user/appointments'>
+        </Link>לקבוע/לבטל תור
       </Button>
       <Button
         size={'optionButton'}
