@@ -124,7 +124,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ addClient }) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder="הערות" {...field} />
+                <Textarea className="p-2" placeholder="הערות" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

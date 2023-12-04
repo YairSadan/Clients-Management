@@ -8,11 +8,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import Link from 'next/link';
 import React from 'react';
 import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
 import prisma from '@/lib/prisma';
+import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
+import { Role } from '@prisma/client';
+import ClientsTable from './components/ClientsTable';
+import { columns } from './components/columns';
 const addClient = async (values: any) => {
   'use server';
   await prisma?.authrizedPool.create({
@@ -26,12 +29,24 @@ const addClient = async (values: any) => {
     },
   });
 };
-const ClientsManager = () => {
+
+const ClientsManager: React.FC = async (props) => {
+  const clients = await prisma.user.findMany({
+    where: {
+      NOT: {
+        role: Role.ADMIN,
+      },
+    },
+  });
+
   return (
     <main className="page-primary justify-center gap-16">
-      <SearchClients />
+      <HomeSvg />
+      <SearchClients clients={clients} />
       <Dialog>
-        <DialogTrigger asChild><Button>הוספת לקוח</Button></DialogTrigger>
+        <DialogTrigger asChild>
+          <Button size={'clientsButton'}>הוספת לקוח</Button>
+        </DialogTrigger>
         <DialogContent className="w-4/5">
           <DialogHeader>
             <DialogTitle className="text-center">
@@ -43,10 +58,7 @@ const ClientsManager = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
-      <Button asChild>
-        <Link href={'admin/clients/'}>לקוחות</Link>
-      </Button>
+      <ClientsTable columns={columns} data={clients} />
     </main>
   );
 };

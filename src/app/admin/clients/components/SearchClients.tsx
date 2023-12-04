@@ -16,34 +16,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { User } from '@prisma/client';
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-];
-
-const ComboboxDemo = () => {
+interface ComboboxDemoProps {
+  clients: User[];
+}
+const ComboboxDemo: React.FC<ComboboxDemoProps> = ({ clients }) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -54,7 +34,7 @@ const ComboboxDemo = () => {
           className="w-[200px] justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? clients.find((client) => client.name === value)?.name
             : 'חפש לקוח'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -64,10 +44,10 @@ const ComboboxDemo = () => {
           <CommandInput placeholder="הכנס שם לקוח" />
           <CommandEmpty>לא נמצא לקוח</CommandEmpty>
           <CommandGroup>
-            {frameworks.map((framework) => (
+            {clients.map((client) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
+                key={client.name}
+                value={client.name!}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? '' : currentValue);
                   setOpen(false);
@@ -76,10 +56,10 @@ const ComboboxDemo = () => {
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    value === framework.value ? 'opacity-100' : 'opacity-0'
+                    value === client.name ? 'opacity-100' : 'opacity-0'
                   )}
                 />
-                {framework.label}
+                {client.name}
               </CommandItem>
             ))}
           </CommandGroup>
