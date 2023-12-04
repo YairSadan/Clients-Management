@@ -35,9 +35,19 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `emailVerified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
+    `role` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `AuthrizedPool` (
+    `email` VARCHAR(191) NOT NULL,
+    `phone` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `AuthrizedPool_phone_key`(`phone`),
+    PRIMARY KEY (`email`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable

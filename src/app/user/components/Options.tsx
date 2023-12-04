@@ -8,13 +8,23 @@ const Options = () => {
 
   return (
     <>
-      <Button size={'optionButton'} onClick={() => {}}>לקבוע/לבטל תור</Button>
-      <Button size={'optionButton'}
+      <Button
+        size={'optionButton'}
+        onClick={() => {
+          router.push('/user/appointments');
+        }}>
+        לקבוע/לבטל תור
+      </Button>
+      <Button
+        size={'optionButton'}
         onClick={() => {
           router.push('/user/payments');
-        }}
-      >לשלם</Button>
-      <Button size={'optionButton'} onClick={() => {}}>לערוך פרטים אישיים</Button>
+        }}>
+        לשלם
+      </Button>
+      <Button size={'optionButton'} onClick={() => {}}>
+        לערוך פרטים אישיים
+      </Button>
     </>
   );
 };
