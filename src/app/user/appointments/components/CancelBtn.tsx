@@ -5,14 +5,18 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const CancelBtn = () => {
+type Props = {
+  date: string;
+};
+
+const CancelBtn = ({ date }: Props) => {
   const router = useRouter();
   return (
     <Button
       variant={'outline'}
       size={'icon'}
       onClick={() => {
-        router.push('?showDialog=y');
+        router.push(`?showDialog=y&date=${date}`);
       }}>
       <XMarkSvg className="text-red-600" />
     </Button>

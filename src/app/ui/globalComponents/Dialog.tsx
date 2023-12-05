@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 
 type Props = {
   title: string;
-  onOk: () => void;
+  onOk: (date: string) => void;
   children: React.ReactNode;
   secondTitle?: string;
-  secondOnOk?: () => void;
+  secondOnOk?: (date: string) => void;
 };
 
 const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
@@ -17,17 +17,24 @@ const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   const showDialog = searchParams.get('showDialog');
   const secondDialog = searchParams.get('secondDialog');
+  const date = searchParams.get('date'); //ONLY ON CONFIRM/CANCEL APPOINTMENTS - NOT ON PAY MODAL
   const router = useRouter();
 
   const childrenArray = React.Children.toArray(children);
   let dialogTitle: string = title;
-  let dialogOnOk: () => void = onOk;
+  let dialogOnOk: (date: string) => void = onOk;
   let dialogChildren: React.ReactNode = childrenArray[0];
 
+  //In order to differentiate between cancel appointment to confirm appointment
   if (secondDialog === 'y') {
     if (secondTitle) dialogTitle = secondTitle;
     if (secondOnOk) dialogOnOk = secondOnOk;
     dialogChildren = childrenArray[1];
+  }
+
+  //In order to show confirm/cancel date on the chosen appointment
+  if (date) {
+    dialogTitle = date;
   }
 
   useEffect(() => {
@@ -44,7 +51,7 @@ const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
   };
 
   const okClick = () => {
-    dialogOnOk();
+    dialogOnOk(dialogTitle);
     closeDialog();
   };
 
@@ -56,7 +63,7 @@ const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
 
         <dialog
           ref={dialogRef}
-          className="flex flex-col justify-center gap-2 py-3 text-center px-5 rounded-lg bg-primary">
+          className="flex flex-col justify-center gap-2 py-3 text-center px-10 rounded-lg bg-primary">
           <XMarkSvg
             onClick={closeDialog}
             className="absolute top-2 right-2 h-5 w-5 cursor-pointer"
