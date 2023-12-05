@@ -35,18 +35,19 @@ model Session {
 }
 
 model User {
-  id                  String    @id @default(cuid())
+  id                  String        @id @default(cuid())
   name                String?
-  email               String    @unique
+  email               String        @unique
   emailVerified       DateTime?
   image               String?
-  role                Role      @default(CLIENT)
-  phone               String    @unique
+  role                Role          @default(CLIENT)
+  phone               String        @unique
   pricePerAppointment Int
   fundingSource       String?
   notes               String?
   accounts            Account[]
   sessions            Session[]
+  Appointment         Appointment[]
 }
 
 enum Role {
@@ -70,4 +71,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Appointment {
+  id     String   @id @default(cuid())
+  start  DateTime
+  end    DateTime
+  userId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

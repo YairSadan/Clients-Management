@@ -1,9 +1,9 @@
-import React from 'react'
+'use client'
+import React from 'react';
+import Calendar from './components/Calendar';
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+const AdminSchedule = () => {
+  return <Calendar />;
+};
 
-export default page
+export default AdminSchedule;

@@ -18,7 +18,7 @@ import ClientsTable from './components/ClientsTable';
 import { columns } from './components/columns';
 const addClient = async (values: any) => {
   'use server';
-  await prisma?.authrizedPool.create({
+  await prisma.authrizedPool.create({
     data: {
       name: values.username,
       phone: values.phone,

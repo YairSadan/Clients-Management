@@ -9,8 +9,8 @@ const AdminOptions = () => {
       <Button size={'optionButton'} asChild>
         <Link href={'admin/clients'}>לקוחות</Link>
       </Button>
-      <Button size={'optionButton'} onClick={() => {}}>
-        לוח זמנים
+      <Button size={'optionButton'} asChild>
+        <Link href={'admin/schedule'}>לוח זמנים</Link>
       </Button>
       <Button size={'optionButton'} onClick={() => {}}>
         תשלומים
