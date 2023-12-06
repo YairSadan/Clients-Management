@@ -3,6 +3,7 @@ import type { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { GoogleProfile } from 'next-auth/providers/google';
 import prisma from './prisma';
+import { Role } from '@prisma/client';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -16,11 +17,15 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       profile(profile: GoogleProfile) {
         return {
-          role: 'user',
           id: profile.sub,
-          name: profile.name,
           email: profile.email,
           image: profile.picture,
+          name: profile.name,
+          role: Role.CLIENT,
+          phone: '',
+          pricePerAppointment: 0,
+          notes: '',
+          fundingSource: '',
         };
       },
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -30,11 +35,25 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false; //TODO: check for a better way to handle this
-      if (await prisma.user.findUnique({ where: { id: user.id } }) || await prisma.authrizedPool.findUnique({ where: {email: user.email}})) { // TODO: check if this is a good practice cause it might be a security issue
+      const isFirstSignIn = await prisma.authrizedPool.findUnique({
+        where: { email: user.email },
+      });
+      if (isFirstSignIn) {
+        user.phone = isFirstSignIn.phone;
+        user.pricePerAppointment = isFirstSignIn.pricePerAppointment;
+        user.notes = isFirstSignIn.notes;
+        user.fundingSource = isFirstSignIn.fundingSource;
+        await prisma.authrizedPool.delete({ where: { email: user.email } });
         return true;
-      }
+      } else if (
+        !isFirstSignIn &&
+        (await prisma.user
+          .findUnique({ where: { email: user.email } })
+          .then((s) => s?.email === user.email))
+      )
+        return true;
       //TODO: add a page to prompt the user to ask for access
-      return false;
+      else return false;
     },
     async session({ session, token }) {
       if (session.user) session.user.role = token.role;
@@ -45,6 +64,6 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role;
       }
       return token;
-    },      
+    },
   },
 };
