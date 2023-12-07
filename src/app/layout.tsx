@@ -16,11 +16,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" suppressHydrationWarning>
-      <body
-        className={`${rubik.className} antialiased bg-primary `}
-        dir="rtl">
+      <body className={`${rubik.className} antialiased bg-primary `} dir="rtl">
         <NextAuthProvider>
-          <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>{children}</ThemeProvider></NextAuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
