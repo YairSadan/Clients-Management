@@ -1,24 +1,16 @@
 import React from 'react';
-import PayBtn from '../components/PayBtn';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
-import Dialog from '@/app/ui/globalComponents/Dialog';
+import PayDialog from './components/PayDialog';
+import ClientDialog from '../components/ClientDialog';
 
 const UserPayment = () => {
-  // async function onClose() {
-  //   'use server';
-  //   console.log('Modal has closed');
-  // }
   async function onOk() {
     'use server';
-    console.log('ok was clicked');
+    console.log('pay was clicked');
   }
 
   return (
     <>
-      <Dialog title="לתשלום: ₪" onOk={onOk}>
-        <p>בטוח?</p>
-      </Dialog>
-
       <main className="page-primary justify-around">
         <HomeSvg />
         <div className="flex flex-row justify-start w-full pr-8">
@@ -26,7 +18,12 @@ const UserPayment = () => {
             החוב שלך: ₪
           </h2>
         </div>
-        <PayBtn />
+        {/* <PayDialog btnContent={'לתשלום'} okClick={onOk}>
+          <p>בטוח?</p>
+        </PayDialog> */}
+        <ClientDialog btnContent={'לתשלום'} payClick={onOk}>
+          <p>בטוח?</p>
+        </ClientDialog>
       </main>
     </>
   );

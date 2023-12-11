@@ -1,10 +1,23 @@
-import Dialog from '@/app/ui/globalComponents/Dialog';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import React from 'react';
-import CancelBtn from './components/CancelBtn';
-import ConfirmBtn from './components/ConfirmBtn';
+import AppDialog from './components/AppDialog';
+import ClientDialog from '../components/ClientDialog';
+import { findUserByEmail, getUsersAppointments } from '@/lib/actions';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { Appointment, User } from '@prisma/client';
+import {
+  ConvertDateToWhen,
+  ConvertToWordDate,
+} from '@/app/utils/dates/DateConverter';
 
-const Appointments = () => {
+const Appointments = async () => {
+  const session = await getServerSession(authOptions);
+  let user: User | null = null;
+  if (session) {
+    user = await findUserByEmail(session?.user.email);
+  }
+
   let testConfirmApps = [
     {
       id: 1,
@@ -39,41 +52,11 @@ const Appointments = () => {
       date: 'qwerty',
     },
   ];
-  let testCancelApps = [
-    {
-      id: 1,
-      date: 'ererer',
-    },
-    {
-      id: 2,
-      date: 'ggggg',
-    },
-    {
-      id: 3,
-      date: 'tufffffes',
-    },
-    {
-      id: 4,
-      date: 'dddddd',
-    },
-    {
-      id: 5,
-      date: 'sssssssss',
-    },
-    {
-      id: 6,
-      date: 'aaaa',
-    },
-    {
-      id: 7,
-      date: 'rrrrrr',
-    },
-    {
-      id: 8,
-      date: 'rtyui',
-    },
-  ];
-  const comfirmApp = async (date: string) => {
+  let myAppointments: Appointment[] | null = null;
+  if (user) {
+    myAppointments = await getUsersAppointments(user?.id);
+  }
+  const confirmApp = async (date: string) => {
     'use server';
     console.log(`${date} Comfirmed`);
   };
@@ -84,30 +67,43 @@ const Appointments = () => {
 
   return (
     <>
-      <Dialog title="Are you sure?" onOk={cancelApp} secondOnOk={comfirmApp}>
-        <p>Are you sure that you would like to cancel this appointment?</p>
-        <p>Are you sure you would like to book this appointment?</p>
-      </Dialog>
-
       <main className="page-primary justify-center gap-9">
         <HomeSvg />
-        <div className="w-4/5">
+        <div className="w-3/5">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
           </h2>
           <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
             {/* example*/}
-            {testCancelApps.map((app) => (
-              <div
-                key={app.id}
-                className="bg-orange-900 rounded-md flex items-center justify-between p-2">
-                {app.date}
-                <CancelBtn date={app.date} />
-              </div>
-            ))}
+            {myAppointments &&
+              myAppointments.map((app) => (
+                <div
+                  key={app.id}
+                  className="bg-orange-900 rounded-md flex items-center justify-between p-2">
+                  {ConvertToWordDate(app.start, true)} -{' '}
+                  {ConvertToWordDate(app.end, false)}
+                  {/* <AppDialog
+                  btnContent={'Cancel'}
+                  appDate={app.date}
+                  okClick={cancelApp}>
+                  <p>
+                    Are you sure that you would like to cancel this appointment?
+                  </p>
+                </AppDialog> */}
+                  <ClientDialog
+                    btnContent={'בטל'}
+                    // appDate={app.date}
+                    confirmClick={cancelApp}>
+                    <p>
+                      את/ה בטוח שתרצה/י לבטל את הפגישה? <br /> מועד הפגישה:{' '}
+                      {ConvertDateToWhen(app.start)}
+                    </p>
+                  </ClientDialog>
+                </div>
+              ))}
           </div>
         </div>
-        <div className="w-4/5">
+        <div className="w-3/5">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>תורים פנויים:</u>
           </h2>
@@ -130,9 +126,7 @@ const Appointments = () => {
                   btnContent={'Book'}
                   appDate={app.date}
                   confirmClick={confirmApp}>
-                  <p>
-                    Are you sure that you would like to book this appointment?
-                  </p>
+                  <p>את/ה בטוח שתרצה/י לשריין את הפגישה הזאת?</p>
                 </ClientDialog>
               </div>
             ))}

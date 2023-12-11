@@ -1,8 +1,6 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
-import XMarkSvg from './XMarkSvg';
-import { Button } from '@/components/ui/button';
 
 type Props = {
   title: string;
@@ -60,14 +58,13 @@ const Dialog = ({ title, onOk, children, secondTitle, secondOnOk }: Props) => {
       <>
         {/* Backdrop overlay - to make the screen go dark*/}
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 backdrop-brightness-50"></div>
-        <dialog
-          ref={dialogRef}
-          className="flex flex-col justify-center gap-2 py-3 text-center px-10 rounded-lg bg-primary">
-          <XMarkSvg
-            onClick={closeDialog}
-            className="absolute top-2 right-2 h-5 w-5 cursor-pointer"
-          />
-          {/* <div className=""> */}
+
+        <dialog ref={dialogRef} className="w-1/2 h-1/5 rounded-lg bg-primary">
+          <button
+            className="mr-1 mt-1 px-2 rounded-xl bg-accent"
+            onClick={closeDialog}>
+            X
+          </button>
           <h1 className="flex justify-center font-bold text-2xl">
             <u>{dialogTitle}</u>
           </h1>
