@@ -1,3 +1,4 @@
+'use server';
 import { Appointment, Role, User } from '@prisma/client';
 import prisma from './prisma';
 export async function fetchClients(): Promise<User[]> {
