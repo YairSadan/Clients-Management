@@ -118,7 +118,22 @@ const Appointments = () => {
                 key={app.id}
                 className="bg-orange-900 rounded-md flex items-center justify-between p-2">
                 {app.date}
-                <ConfirmBtn date={app.date} />
+                {/* <AppDialog
+                  btnContent={'Book'}
+                  appDate={app.date}
+                  okClick={comfirmApp}>
+                  <p>
+                    Are you sure that you would like to book this appointment?
+                  </p>
+                </AppDialog> */}
+                <ClientDialog
+                  btnContent={'Book'}
+                  appDate={app.date}
+                  confirmClick={confirmApp}>
+                  <p>
+                    Are you sure that you would like to book this appointment?
+                  </p>
+                </ClientDialog>
               </div>
             ))}
           </div>
