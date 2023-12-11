@@ -1,7 +1,7 @@
 'use client';
 import { Calendar, View, Views, luxonLocalizer } from 'react-big-calendar';
 import { DateTime } from 'luxon';
-import 'react-big-calendar/lib/sass/styles.scss';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Appointment, Prisma, User } from '@prisma/client';
 import { fetchAppointments, fetchClients } from '@/lib/data';
