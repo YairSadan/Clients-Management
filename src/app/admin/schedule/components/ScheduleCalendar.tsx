@@ -1,5 +1,5 @@
 'use client';
-import { Calendar, View, Views, luxonLocalizer } from 'react-big-calendar';
+import { Calendar, View, Views, momentLocalizer } from 'react-big-calendar';
 import { DateTime } from 'luxon';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -7,11 +7,43 @@ import { Appointment, Prisma, User } from '@prisma/client';
 import { fetchAppointments, fetchClients } from '@/lib/data';
 import AppointmentDialog from './AppointmentDialog';
 import DisplayAppointmentDialog from './DisplayAppointmentDialog';
-
-const localizer = luxonLocalizer(DateTime, { firstDayOfWeek: 7 });
+import * as moment from 'moment';
+moment.locale('he-IL', {
+  months: [
+    'ינואר',
+    'פברואר',
+    'מרץ',
+    'אפריל',
+    'מאי',
+    'יוני',
+    'יולי',
+    'אוגוסט',
+    'ספטמבר',
+    'אוקטובר',
+    'נובמבר',
+    'דצמבר',
+  ],
+  monthsShort: [
+    'ינו',
+    'פבר',
+    'מרץ',
+    'אפר',
+    'מאי',
+    'יונ',
+    'יול',
+    'אוג',
+    'ספט',
+    'אוק',
+    'נוב',
+    'דצמ',
+  ],
+  weekdays: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
+  weekdaysShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'],
+});
+const localizer = momentLocalizer(moment);
 
 const ScheduleCalendar: React.FC = ({}) => {
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>();
   const [view, setView] = useState<View>(Views.WEEK);
   const [open, setOpen] = useState<boolean>(false);
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
@@ -88,16 +120,22 @@ const ScheduleCalendar: React.FC = ({}) => {
         appointment={appointment}
       />
       <Calendar
-        style={{ height: '100vh', width: '100vw' }}
+        style={{
+          height: '100vh',
+          width: '100vw',
+          backgroundColor: 'white',
+          color: 'black',
+          direction: 'rtl',
+        }}
         date={date}
+        rtl={true}
         localizer={localizer}
         events={dbAppointments}
         view={view}
         onView={onView}
         onNavigate={onNavigate}
-        culture="he-il"
-        min={new Date(0, 0, 0, 6, 1, 0)}
-        max={new Date(0, 0, 0, 22, 1, 0)}
+        min={new Date(0, 0, 0, 6, 0, 0)}
+        max={new Date(0, 0, 0, 22, 0, 0)}
         eventPropGetter={(event) => {
           if (event.userId)
             return {

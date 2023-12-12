@@ -2,10 +2,8 @@ import React from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Appointment, User } from '@prisma/client';
 import { Button } from '@/components/ui/button';

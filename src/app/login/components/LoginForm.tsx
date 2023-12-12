@@ -4,21 +4,20 @@ import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Role } from '@prisma/client';
 
 const LoginForm = () => {
   const { data: session, status } = useSession();
-  const router = useRouter(); // Add this line
+  const router = useRouter();
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      console.log();
-      if (session.user?.email === 'yairsadan1@gmail.com') router.push('/admin');
-      // Update the redirect function to use router.push
-      else if (session.user?.email !== null)
-        router.push('/user'); // Update the redirect function to use router.push
+    if (status === 'authenticated' && session.user) {
+      if (session.user.role === Role.ADMIN) router.push('/admin');
+      else if (session.user.role === Role.CLIENT)
+        router.push('/user');
       else throw new Error();
     }
-  }, [status, router, session?.user?.email]); // Add router to the dependency array
+  }, [router, session?.user, status]);
 
   return (
     <>

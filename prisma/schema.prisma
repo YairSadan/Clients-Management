@@ -71,13 +71,13 @@ model VerificationToken {
 }
 
 model Appointment {
-  id     String   @id @default(cuid())
-  start  DateTime
-  end    DateTime
-  userId String?
-  title  String
-  user   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  start     DateTime
+  end       DateTime
+  userId    String?
+  title     String
+  completed Boolean  @default(false)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
