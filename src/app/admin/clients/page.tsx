@@ -11,27 +11,14 @@ import {
 import React from 'react';
 import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
-import prisma from '@/lib/prisma';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import ClientsTable from './components/ClientsTable';
 import { columns } from './components/columns';
 import { fetchClients } from '@/lib/data';
-const addClient = async (values: any) => {
-  'use server';
-  await prisma.authrizedPool.create({
-    data: {
-      name: values.username,
-      phone: values.phone,
-      email: values.email,
-      pricePerAppointment: values.pricePerAppointment,
-      fundingSource: values.fundingSource,
-      notes: values.notes,
-    },
-  });
-};
+import { User } from '@prisma/client';
 
 const ClientsManager: React.FC = async () => {
-  const clients = await fetchClients();
+  const clients: User[] = await fetchClients();
 
   return (
     <main className="page-primary justify-center gap-16">
@@ -47,7 +34,7 @@ const ClientsManager: React.FC = async () => {
               הכנס את פרטי הלקוח
             </DialogTitle>
             <DialogDescription>
-              <AddClientForm addClient={addClient} />
+              <AddClientForm />
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

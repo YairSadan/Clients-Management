@@ -10,16 +10,6 @@ export async function createAppointment(
   });
   return appointment;
 }
-export async function findUserByEmail(
-  email: string,
-): Promise<User | null> {
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  })
-  return user
-}
 
 export async function deleteAppointment(id: string): Promise<void> {
   await prisma.appointment.delete({
@@ -27,6 +17,15 @@ export async function deleteAppointment(id: string): Promise<void> {
       id,
     },
   });
+}
+
+export async function findUserByEmail(email: string): Promise<User | null> {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  return user;
 }
 
 export async function updateUser(
@@ -50,11 +49,21 @@ export async function findUserById(id: string): Promise<User | null> {
   return user;
 }
 
-export async function getUsersAppointments(id: string): Promise<Appointment[] | null> {
+export async function getUsersAppointments(
+  id: string
+): Promise<Appointment[] | null> {
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
     },
   });
   return appointments;
+}
+
+export async function addUserToAuthrizedUsers(
+  data: Prisma.AuthrizedPoolCreateInput
+): Promise<void> {
+  await prisma.authrizedPool.create({
+    data,
+  });
 }

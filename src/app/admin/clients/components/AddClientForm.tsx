@@ -13,11 +13,10 @@ import {
 import { Input } from '@/components/ui/input';
 import * as z from 'zod';
 import { Textarea } from '@/components/ui/textarea';
+import { addUserToAuthrizedUsers } from '@/lib/actions';
 
 const formSchema = z.object({
-  username: z
-    .string()
-    .min(2, { message: 'יש להכניס שם מלא (לפחות שני תווים)' }),
+  name: z.string().min(2, { message: 'יש להכניס שם מלא (לפחות שני תווים)' }),
   phone: z
     .string()
     .min(9, { message: 'יש להכניס מספר טלפון תקין' })
@@ -35,14 +34,12 @@ const formSchema = z.object({
     .string()
     .max(500, { message: 'ההערות אינן יכולות להיות יותר מ500 תווים' }),
 });
-interface AddClientFormProps {
-  addClient: (values: z.infer<typeof formSchema>) => void;
-}
-const AddClientForm: React.FC<AddClientFormProps> = ({ addClient }) => {
+
+const AddClientForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      name: '',
       phone: '',
       email: '',
       fundingSource: '',
@@ -50,7 +47,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ addClient }) => {
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    addClient(values);
+    addUserToAuthrizedUsers(values);
   };
   return (
     <Form {...form}>
@@ -60,7 +57,7 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ addClient }) => {
       >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormControl>
