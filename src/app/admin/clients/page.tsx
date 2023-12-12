@@ -13,9 +13,9 @@ import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
 import prisma from '@/lib/prisma';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
-import { Role } from '@prisma/client';
 import ClientsTable from './components/ClientsTable';
 import { columns } from './components/columns';
+import { fetchClients } from '@/lib/data';
 const addClient = async (values: any) => {
   'use server';
   await prisma.authrizedPool.create({
@@ -30,14 +30,8 @@ const addClient = async (values: any) => {
   });
 };
 
-const ClientsManager: React.FC = async (props) => {
-  const clients = await prisma.user.findMany({
-    where: {
-      NOT: {
-        role: Role.ADMIN,
-      },
-    },
-  });
+const ClientsManager: React.FC = async () => {
+  const clients = await fetchClients();
 
   return (
     <main className="page-primary justify-center gap-16">
