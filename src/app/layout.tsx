@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" suppressHydrationWarning>
-      <body className={`${rubik.className} antialiased bg-primary `} dir="rtl">
+      <body className={`${rubik.className} antialiased`} dir="rtl">
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"

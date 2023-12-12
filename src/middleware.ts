@@ -7,15 +7,17 @@ export default withAuth(
     if (
       req.nextUrl.pathname.startsWith('/admin') &&
       req.nextauth.token?.role !== Role.ADMIN
-    ) {
-      return NextResponse.rewrite(new URL('/user', req.url));
-    }
-    if (
+    )
+      return NextResponse.redirect(new URL('/user', req.url));
+    
+    else if (
       req.nextUrl.pathname.startsWith('/user') &&
       req.nextauth.token?.role !== Role.CLIENT
-    ) {
-      return NextResponse.rewrite(new URL('/admin', req.url));
-    }
+    )
+      return NextResponse.redirect(new URL('/admin', req.url));
+    
+    else if (req.nextUrl.pathname === '/' || !req.nextUrl.pathname.startsWith('/admin' || '/user' || '/login'))
+      return NextResponse.redirect(new URL('/user', req.url));
   },
   {
     pages: {
