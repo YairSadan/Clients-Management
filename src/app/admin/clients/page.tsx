@@ -13,13 +13,8 @@ import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import ClientsTable from './components/ClientsTable';
-import { columns } from './components/columns';
-import { fetchClients } from '@/lib/data';
-import { User } from '@prisma/client';
 
 const ClientsManager: React.FC = async () => {
-  const clients: User[] = await fetchClients();
-
   return (
     <main className="page-primary justify-center gap-16">
       <HomeSvg />
@@ -39,7 +34,7 @@ const ClientsManager: React.FC = async () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <ClientsTable columns={columns} data={clients} />
+      <ClientsTable />
     </main>
   );
 };

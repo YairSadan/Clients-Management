@@ -15,19 +15,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { columns } from './columns';
+import { User } from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { fetchClients } from '@/lib/data';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+export default function DataTable<TData, TValue>() {
+  const Columns = columns;
+  const [clients, setClients] = useState<User[]>([]);
+  useEffect(() => {
+    (async () => {
+      const res = await fetchClients();
+      setClients(res);
+    })();
+  }, []);
 
-export default function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
   const table = useReactTable({
-    data,
-    columns,
+    data: clients,
+    columns: Columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
@@ -39,7 +44,7 @@ export default function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead className='text-center' key={header.id}>
+                  <TableHead className="text-center" key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
