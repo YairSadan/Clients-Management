@@ -23,7 +23,7 @@ const ClientsManager: React.FC = async () => {
   return (
     <main className="page-primary justify-center gap-16">
       <HomeSvg />
-      <SearchClients clients={clients} />
+      <SearchClients/>
       <Dialog>
         <DialogTrigger asChild>
           <Button size={'clientsButton'}>הוספת לקוח</Button>

@@ -17,13 +17,18 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { User } from '@prisma/client';
-
-interface ComboboxDemoProps {
-  clients: User[];
-}
-const ComboboxDemo: React.FC<ComboboxDemoProps> = ({ clients }) => {
+import { fetchClients } from '@/lib/data';
+const ComboboxDemo: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
+  const [clients, setClients] = React.useState<User[]>([]);
+  React.useEffect(() => {
+    const updateClients = async () => {
+      const clients = await fetchClients();
+      setClients(clients);
+    };
+    updateClients();
+  }, []);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
