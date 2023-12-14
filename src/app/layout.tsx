@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" suppressHydrationWarning>
-      <body className={`${rubik.className} antialiased h-screen`} dir="rtl">
+      <body className={`${rubik.className} antialiased absolute inset-0`} dir="rtl">
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"
