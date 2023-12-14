@@ -47,6 +47,7 @@ const AddClientForm = () => {
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    values.email = values.email.toLowerCase();
     addUserToAuthrizedUsers(values);
   };
   return (

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -18,16 +18,15 @@ import {
 } from '@/components/ui/popover';
 import { User } from '@prisma/client';
 import { fetchClients } from '@/lib/data';
-const ComboboxDemo: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('');
-  const [clients, setClients] = React.useState<User[]>([]);
-  React.useEffect(() => {
-    const updateClients = async () => {
+const ComboboxDemo = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+  const [clients, setClients] = useState<User[]>([]);
+  useEffect(() => {
+    (async () => {
       const clients = await fetchClients();
       setClients(clients);
-    };
-    updateClients();
+    })();
   }, []);
   return (
     <Popover open={open} onOpenChange={setOpen}>
