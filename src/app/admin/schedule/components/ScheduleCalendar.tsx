@@ -65,8 +65,11 @@ const ScheduleCalendar: React.FC = ({}) => {
   const onView = useCallback((newView: View) => setView(newView), [setView]);
 
   useEffect(() => {
-    fetchAppointments().then((res) => setDbAppointments(res));
-  }, [popupOpen]); // can be reduced to only when the popup turns false
+    (async () => {
+      setDbAppointments(await fetchAppointments());
+      setClients(await fetchClients());
+    })();
+  }, []); // can be reduced to only when the popup turns false
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
@@ -77,22 +80,10 @@ const ScheduleCalendar: React.FC = ({}) => {
     [setAppointment, setOpen, clients]
   );
 
-  const handleSelectEvent = useCallback(
-    (event: Appointment) => {
-      setChosenAppointment(event);
-      if (clients.length === 0)
-        fetchClients().then((res) => {
-          setClients(res);
-          setClient(res.find((client) => client.id === event.userId));
-          setPopupOpen(true);
-        });
-      else {
-        setClient(clients.find((client) => client.id === event.userId));
-        setPopupOpen(true);
-      }
-    },
-    [clients]
-  );
+  const handleSelectEvent = useCallback((event: Appointment) => {
+    setChosenAppointment(event);
+    setPopupOpen(true);
+  }, []);
 
   const handleSelectClient = useCallback((id: string, name: string | null) => {
     setAppointment((prev) => ({

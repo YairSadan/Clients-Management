@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -21,15 +20,14 @@ import { useEffect, useState } from 'react';
 import { fetchClients } from '@/lib/data';
 
 export default function DataTable<TData, TValue>() {
-  const Columns = columns;
   const [clients, setClients] = useState<User[]>([]);
   useEffect(() => {
     (async () => {
-      const res = await fetchClients();
-      setClients(res);
+      setClients(await fetchClients());
     })();
   }, []);
-
+  
+  const Columns = columns;
   const table = useReactTable({
     data: clients,
     columns: Columns,

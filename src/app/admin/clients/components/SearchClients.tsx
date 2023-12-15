@@ -24,8 +24,7 @@ const ComboboxDemo = () => {
   const [clients, setClients] = useState<User[]>([]);
   useEffect(() => {
     (async () => {
-      const clients = await fetchClients();
-      setClients(clients);
+      setClients(await fetchClients());
     })();
   }, []);
   return (
