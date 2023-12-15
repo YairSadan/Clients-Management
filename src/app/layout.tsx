@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" suppressHydrationWarning>
-      <body className={`${rubik.className} antialiased absolute inset-0`} dir="rtl">
+    <html lang="he" suppressHydrationWarning className='h-full'>
+      <body className={`${rubik.className} antialiased h-full`} dir="rtl">
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"
