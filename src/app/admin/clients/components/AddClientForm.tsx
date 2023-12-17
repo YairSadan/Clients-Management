@@ -42,6 +42,7 @@ const AddClientForm = () => {
       name: '',
       phone: '',
       email: '',
+      pricePerAppointment: 0, //TODO: fix it so it'll display the placeholder
       fundingSource: '',
       notes: '',
     },

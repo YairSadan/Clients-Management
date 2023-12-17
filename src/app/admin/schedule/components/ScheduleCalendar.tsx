@@ -74,10 +74,9 @@ const ScheduleCalendar: React.FC = ({}) => {
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
       setAppointment((prev) => ({ ...prev, start, end }));
-      if (clients.length === 0) fetchClients().then((res) => setClients(res));
       setOpen(true);
     },
-    [setAppointment, setOpen, clients]
+    [setAppointment, setOpen]
   );
 
   const handleSelectEvent = useCallback((event: Appointment) => {
