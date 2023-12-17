@@ -1,6 +1,4 @@
 'use client';
-import VMarkSvg from '@/app/ui/globalComponents/VMarkSvg';
-import XMarkSvg from '@/app/ui/globalComponents/XMarkSvg';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,17 +10,23 @@ import {
   DialogHeader,
   DialogFooter,
 } from '@/components/ui/dialog';
+import { Check, X } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
 type Props = {
   btnContent: string;
   children: React.ReactNode;
-  okClick: () => void;
+  saveClick: () => void;
   cancelClick: () => void;
 };
 
-const SaveDialog = ({ btnContent, children, okClick, cancelClick }: Props) => {
+const SaveDialog = ({
+  btnContent,
+  children,
+  saveClick,
+  cancelClick,
+}: Props) => {
   const childrenArray = React.Children.toArray(children);
   return (
     <Dialog>
@@ -48,15 +52,15 @@ const SaveDialog = ({ btnContent, children, okClick, cancelClick }: Props) => {
         <DialogFooter>
           <DialogClose className="flex justify-center gap-5">
             <Button variant={'outline'} size={'icon'} onClick={cancelClick}>
-              <XMarkSvg className="text-red-600" />
+              <X className="text-red-600" />
             </Button>
             <Button
               variant={'outline'}
               size={'icon'}
               onClick={() => {
-                okClick();
+                saveClick();
               }}>
-              <VMarkSvg className="text-green-600" />
+              <Check className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>

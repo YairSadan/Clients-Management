@@ -1,16 +1,18 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 const AdminOptions = () => {
+  const pathName = usePathname();
   return (
     <>
       <Button size={'optionButton'} asChild>
-        <Link href={'admin/clients'}>לקוחות</Link>
+        <Link href={`${pathName}/clients`}>לקוחות</Link>
       </Button>
       <Button size={'optionButton'} asChild>
-        <Link href={'admin/schedule'}>לוח זמנים</Link>
+        <Link href={`${pathName}/schedule`}>לוח זמנים</Link>
       </Button>
       <Button size={'optionButton'} onClick={() => {}}>
         תשלומים

@@ -1,19 +1,21 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 const Options = () => {
+  const pathName = usePathname();
   return (
     <>
       <Button size={'optionButton'} asChild>
-        <Link href={'/user/appointments'}>לקבוע/לבטל תור</Link>
+        <Link href={`${pathName}/appointments`}>לקבוע/לבטל תור</Link>
       </Button>
       <Button size={'optionButton'} asChild>
-        <Link href={'/user/payments'}>לשלם</Link>
+        <Link href={`${pathName}/payments`}>לשלם</Link>
       </Button>
       <Button size={'optionButton'} asChild>
-        <Link href={'/user/profile'}>לערוך פרטים אישיים</Link>
+        <Link href={`${pathName}/profile`}>פרופיל</Link>
       </Button>
     </>
   );

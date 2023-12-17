@@ -11,15 +11,26 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import React from 'react';
-import VMarkSvg from '@/app/ui/globalComponents/VMarkSvg';
+import { Check, X } from 'lucide-react';
+import { Appointment } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   btnContent: string;
+  appDate: string;
+  appointment: Appointment;
   children: React.ReactNode;
-  okClick: () => void;
+  confirmClick: (appointment: Appointment) => void;
 };
 
-const PayDialog = ({ btnContent, children, okClick }: Props) => {
+const AppDialog = ({
+  btnContent,
+  appDate,
+  appointment,
+  children,
+  confirmClick,
+}: Props) => {
+  const router = useRouter();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,18 +38,22 @@ const PayDialog = ({ btnContent, children, okClick }: Props) => {
       </DialogTrigger>
       <DialogContent className="w-4/5">
         <DialogHeader>
-          {/* <DialogTitle className="text-center">{appDate}</DialogTitle> */}
+          <DialogTitle className="text-center">{appDate}</DialogTitle>
           <DialogDescription>{children}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose>
+          <DialogClose className="flex justify-center gap-5">
+            <Button variant={'outline'} size={'icon'}>
+              <X className="text-red-600" />
+            </Button>
             <Button
               variant={'outline'}
               size={'icon'}
               onClick={() => {
-                okClick();
+                confirmClick(appointment);
+                router.refresh();
               }}>
-              <VMarkSvg className="text-green-600" />
+              <Check className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -47,4 +62,4 @@ const PayDialog = ({ btnContent, children, okClick }: Props) => {
   );
 };
 
-export default PayDialog;
+export default AppDialog;
