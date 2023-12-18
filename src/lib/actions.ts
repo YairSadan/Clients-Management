@@ -74,7 +74,6 @@ export async function findUserById(id: string): Promise<User | null> {
 }
 
 export async function getUserAppointments(id: string): Promise<Appointment[] | null> {
-  await completeCompletedAppointments();
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
@@ -126,12 +125,11 @@ export async function completeCompletedAppointments(): Promise<void> {
 }
 
 export async function getUsersOwedForAppointments(id: string): Promise<number> {
+  await completeCompletedAppointments();
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
-      start: {
-        lte: new Date(),
-      },
+      completed: true
     },
   });
   const appAmount = appointments.length
