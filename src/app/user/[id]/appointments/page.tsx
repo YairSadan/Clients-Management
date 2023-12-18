@@ -57,7 +57,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto h-[30vh]">
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
             {myAppointments &&
               myAppointments.map((app) => (
                 <div
@@ -70,7 +70,7 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={cancelApp}>
-                    <p>את/ה בטוח שתרצה/י לבטל את הפגישה?</p>
+                    את/ה בטוח/ה שתרצה/י לבטל את הפגישה?
                   </AppDialog>
                 </div>
               ))}
@@ -80,7 +80,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>תורים פנויים:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto h-[30vh]">
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
             {availableAppointments &&
               availableAppointments.map((app) => (
                 <div
@@ -93,9 +93,7 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={confirmApp}>
-                    <p>
-                      Are you sure that you would like to book this appointment?
-                    </p>
+                    את/ה בטוח/ה שתרצה/י לקבוע את הפגישה?
                   </AppDialog>
                 </div>
               ))}
