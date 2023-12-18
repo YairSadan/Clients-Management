@@ -13,6 +13,7 @@ import {
   ConvertDateToWhen,
   ConvertToWordDate,
 } from '@/app/utils/dates/DateConverter';
+import createDailyAppointments from '@/app/utils/appointments/createDailyAppointments';
 
 type Props = {
   params: {
@@ -30,6 +31,7 @@ const Appointments = async ({ params }: Props) => {
     params.id
   );
 
+  // await createDailyAppointments(true);
   //SORTING FUNC
   const compareAppointments = (a: Appointment, b: Appointment) => {
     return new Date(a.start).getTime() - new Date(b.start).getTime();
@@ -55,7 +57,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
+          <div className="flex flex-col gap-2 overflow-y-auto h-[30vh]">
             {myAppointments &&
               myAppointments.map((app) => (
                 <div
@@ -78,8 +80,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>תורים פנויים:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
-            {/* example*/}
+          <div className="flex flex-col gap-2 overflow-y-auto h-[30vh]">
             {availableAppointments &&
               availableAppointments.map((app) => (
                 <div
