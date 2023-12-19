@@ -11,7 +11,7 @@ export async function createAppointment(
   return appointment;
 }
 
-export async function createAvailableAppointment( start: string, end: string ): Promise<void> {
+export async function createAvailableAppointment(start: string, end: string): Promise<void> {
   await prisma.appointment.create({
     data: {
       start: start,
@@ -129,7 +129,8 @@ export async function getUsersOwedForAppointments(id: string): Promise<number> {
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
-      completed: true
+      completed: true,
+      payed: false,
     },
   });
   const appAmount = appointments.length
