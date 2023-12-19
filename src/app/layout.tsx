@@ -3,6 +3,7 @@ import './globals.css';
 import { rubik } from './ui/fonts';
 import { NextAuthProvider } from './providers';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Clients & Payments',
@@ -24,6 +25,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange>
             {children}
+            <Toaster />
           </ThemeProvider>
         </NextAuthProvider>
       </body>

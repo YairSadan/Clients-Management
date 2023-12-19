@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import * as z from 'zod';
 import { Textarea } from '@/components/ui/textarea';
 import { addUserToAuthrizedUsers } from '@/lib/actions';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'יש להכניס שם מלא (לפחות שני תווים)' }),
@@ -34,8 +35,12 @@ const formSchema = z.object({
     .string()
     .max(500, { message: 'ההערות אינן יכולות להיות יותר מ500 תווים' }),
 });
+interface AddClientFormProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const AddClientForm = () => {
+const AddClientForm: React.FC<AddClientFormProps> = ({ setOpen }) => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,9 +52,14 @@ const AddClientForm = () => {
       notes: '',
     },
   });
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit =async (values: z.infer<typeof formSchema>) => {
     values.email = values.email.toLowerCase();
-    addUserToAuthrizedUsers(values);
+   const message = await addUserToAuthrizedUsers(values);
+    setOpen(false);
+    toast({
+      title: 'הלקוח נוסף בהצלחה',
+      description: message,
+    });
   };
   return (
     <Form {...form}>

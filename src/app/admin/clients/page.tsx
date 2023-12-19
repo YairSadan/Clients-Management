@@ -1,25 +1,26 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import React from 'react';
+import React, { useState } from 'react';
 import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import ClientsTable from './components/ClientsTable';
 
-const ClientsManager: React.FC = async () => {
+const ClientsManager: React.FC = () => {
+  const [open, setOpen] = useState(false);
   return (
     <main className="page-primary justify-center gap-16">
       <HomeSvg />
       <SearchClients />
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button size={'clientsButton'}>הוספת לקוח</Button>
         </DialogTrigger>
@@ -29,7 +30,7 @@ const ClientsManager: React.FC = async () => {
               הכנס את פרטי הלקוח
             </DialogTitle>
           </DialogHeader>
-          <AddClientForm />
+          <AddClientForm setOpen={setOpen} />
         </DialogContent>
       </Dialog>
       <ClientsTable />
