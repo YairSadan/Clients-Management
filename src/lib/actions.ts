@@ -2,6 +2,7 @@
 import { Appointment, Prisma, Role, User } from '@prisma/client';
 import prisma from './prisma';
 import { getServerSession } from 'next-auth';
+import { UserWithAppoinments } from './types';
 
 export async function createAppointment(
   data: Prisma.AppointmentCreateInput
@@ -68,12 +69,13 @@ export async function updateUser(
   });
 }
 
-export async function findUserById(id: string): Promise<User | null> {
+export async function findUserById(id: string): Promise<User> {
   const user = await prisma.user.findUnique({
     where: {
       id,
     },
   });
+  if (!user) throw new Error('User was not found');
   return user;
 }
 
@@ -130,17 +132,50 @@ export async function completeCompletedAppointments(): Promise<void> {
 
 export async function getUsersOwedForAppointments(id: string): Promise<number> {
   await completeCompletedAppointments();
-  const appointments = await prisma.appointment.findMany({
+  await prisma.user.aggregate({
     where: {
-      userId: id,
-      completed: true,
+      id,
     },
-  });
-  const appAmount = appointments.length
-  const user = await findUserById(id)
-  if (user?.pricePerAppointment) return user?.pricePerAppointment * appAmount
-
+    select: {
+      pricePerAppointment: true,
+      _count: {
+        select: {
+          Appointment: {
+            where: {
+              completed: true,
+              payed: false
+            },
+          },
+        }
+      }
+    },
+  })
+  try {
+    const user: Prisma.AggregateUser = await prisma.user.findUniqueOrThrow({
+      where: {
+        id,
+      },
+      select: {
+        pricePerAppointment: true,
+        _count: {
+          select: {
+            Appointment: {
+              where: {
+                completed: true,
+                payed: false
+              },
+            },
+          }
+        }
+      },
+    })
+    console.log(user._count.Appointment)
+    return user.pricePerAppointment * user.Appointment.length
+  } catch (error: any) {
+    console.log(error.message)
+  }
   return 0;
+
 }
 
 export async function addUserToAuthrizedUsers(
