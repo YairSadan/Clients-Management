@@ -11,16 +11,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import React from 'react';
-import VMarkSvg from '@/app/ui/globalComponents/VMarkSvg';
+import { Check, X } from 'lucide-react';
 
 type Props = {
   btnContent: string;
-  appDate: string;
+  amountToPay: number;
   children: React.ReactNode;
-  okClick: (date: string) => void;
+  payClick: (shekels: number) => void;
 };
 
-const AppDialog = ({ btnContent, appDate, children, okClick }: Props) => {
+const PayDialog = ({ btnContent, amountToPay, children, payClick }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,18 +28,23 @@ const AppDialog = ({ btnContent, appDate, children, okClick }: Props) => {
       </DialogTrigger>
       <DialogContent className="w-4/5">
         <DialogHeader>
-          <DialogTitle className="text-center">{appDate}</DialogTitle>
+          <DialogTitle className="text-center">
+            סכום לתשלום: {amountToPay}₪
+          </DialogTitle>
           <DialogDescription>{children}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose>
+          <DialogClose className="flex justify-center gap-5">
+            <Button variant={'outline'} size={'icon'}>
+              <X className="text-red-600" />
+            </Button>
             <Button
               variant={'outline'}
               size={'icon'}
               onClick={() => {
-                okClick(appDate);
+                payClick(amountToPay);
               }}>
-              <VMarkSvg className="text-green-600" />
+              <Check className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -48,4 +53,4 @@ const AppDialog = ({ btnContent, appDate, children, okClick }: Props) => {
   );
 };
 
-export default AppDialog;
+export default PayDialog;

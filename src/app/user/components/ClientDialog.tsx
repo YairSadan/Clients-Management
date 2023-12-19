@@ -12,28 +12,30 @@ import {
 } from '@/components/ui/dialog';
 import React from 'react';
 import Image from 'next/image';
-import VMarkSvg from '@/app/ui/globalComponents/VMarkSvg';
-import XMarkSvg from '@/app/ui/globalComponents/XMarkSvg';
 import { Check, X } from 'lucide-react';
 
 type Props = {
   btnContent: string;
   appDate?: string;
+  appDateTimeSlot?: string;
   children: React.ReactNode;
   confirmClick?: (date: string) => void;
   saveClick?: () => void;
   cancelClick?: () => void;
-  payClick?: () => void;
+  payClick?: (shekels: number) => void;
+  amountToPay?: number;
 };
 
 const ClientDialog = ({
   btnContent,
   appDate,
+  appDateTimeSlot,
   children,
   confirmClick,
   saveClick,
   cancelClick,
   payClick,
+  amountToPay,
 }: Props) => {
   let childrenArray = null;
   if (saveClick) childrenArray = React.Children.toArray(children);
@@ -42,14 +44,16 @@ const ClientDialog = ({
       <DialogTrigger asChild>
         <Button>{btnContent}</Button>
       </DialogTrigger>
-      <DialogContent className="w-4/5">
+      <DialogContent className="w-4/5 flex flex-col gap-8">
         <DialogHeader className="flex flex-col gap-5">
           {appDate && (
-            <DialogTitle className="text-center">{appDate}</DialogTitle>
+            <DialogTitle className="text-center">
+              מועד הפגישה: {appDate}
+            </DialogTitle>
           )}
           {childrenArray && (
             <DialogTitle>
-              <u>{childrenArray[0]}</u>
+              <u className="text-red-600">{childrenArray[0]}</u>
             </DialogTitle>
           )}
 
@@ -85,9 +89,10 @@ const ClientDialog = ({
               variant={'outline'}
               size={'icon'}
               onClick={() => {
-                if (appDate && confirmClick) confirmClick(appDate);
+                if (appDateTimeSlot && confirmClick)
+                  confirmClick(appDateTimeSlot);
                 if (saveClick) saveClick();
-                if (payClick) payClick();
+                if (amountToPay && payClick) payClick(amountToPay);
               }}>
               <Check className="w-8 h-8 text-green-600" />
             </Button>
