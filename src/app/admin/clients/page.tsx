@@ -9,10 +9,10 @@ import {
 } from '@/components/ui/dialog';
 
 import React, { useState } from 'react';
-import AddClientForm from './components/AddClientForm';
 import SearchClients from './components/SearchClients';
 import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import ClientsTable from './components/ClientsTable';
+import AddClientForm from './components/AddClientForm';
 
 const ClientsManager: React.FC = () => {
   const [open, setOpen] = useState(false);
