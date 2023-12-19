@@ -27,7 +27,7 @@ const UserPayment = async ({ params }: Props) => {
           </h2>
         </div>
         <PayDialog btnContent={'לתשלום'} payClick={onOk} amountToPay={owed}>
-          <p>בטוח?</p>
+          בטוח?
         </PayDialog>
       </main>
     </>

@@ -68,7 +68,7 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={cancelApp}>
-                    <p>את/ה בטוח שתרצה/י לבטל את הפגישה?</p>
+                    את/ה בטוח שתרצה/י לבטל את הפגישה?
                   </AppDialog>
                 </div>
               ))}
@@ -79,7 +79,6 @@ const Appointments = async ({ params }: Props) => {
             <u>תורים פנויים:</u>
           </h2>
           <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
-            {/* example*/}
             {availableAppointments &&
               availableAppointments.map((app) => (
                 <div
@@ -92,9 +91,7 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={confirmApp}>
-                    <p>
-                      Are you sure that you would like to book this appointment?
-                    </p>
+                    את/ה בטוח/ה שתרצה/י לקבוע את הפגישה?
                   </AppDialog>
                 </div>
               ))}

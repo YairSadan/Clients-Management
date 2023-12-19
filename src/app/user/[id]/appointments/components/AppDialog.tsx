@@ -41,11 +41,13 @@ const AppDialog = ({
           <DialogTitle className="text-center">{appDate}</DialogTitle>
           <DialogDescription>{children}</DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <DialogClose className="flex justify-center gap-5">
+        <DialogFooter className="flex justify-center gap-5">
+          <DialogClose asChild>
             <Button variant={'outline'} size={'icon'}>
               <X className="text-red-600" />
             </Button>
+          </DialogClose>
+          <DialogClose asChild>
             <Button
               variant={'outline'}
               size={'icon'}

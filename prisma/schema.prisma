@@ -75,6 +75,7 @@ model Appointment {
   userId    String?
   title     String
   completed Boolean  @default(false)
+  payed     Boolean  @default(false)
   user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

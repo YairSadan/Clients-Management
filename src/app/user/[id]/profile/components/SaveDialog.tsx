@@ -42,18 +42,20 @@ const SaveDialog = ({
             {childrenArray[1]}
             {childrenArray[2]}
             <Image
-              src={(childrenArray[3] as React.ReactElement)?.props.children[1]}
+              src={(childrenArray[3] as React.ReactElement)?.props.children}
               height={75}
               width={75}
               alt={childrenArray[1] as string}
             />
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <DialogClose className="flex justify-center gap-5">
+        <DialogFooter className="flex justify-center gap-5">
+          <DialogClose asChild>
             <Button variant={'outline'} size={'icon'} onClick={cancelClick}>
               <X className="text-red-600" />
             </Button>
+          </DialogClose>
+          <DialogClose asChild>
             <Button
               variant={'outline'}
               size={'icon'}

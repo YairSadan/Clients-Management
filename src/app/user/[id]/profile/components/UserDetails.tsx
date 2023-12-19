@@ -81,9 +81,9 @@ const UserDetails = ({ user }: Props) => {
             saveClick={saveChanges}
             cancelClick={() => setEditMode(false)}>
             <h4>U Sure? theses r the change</h4>
-            <p>Name: {editedUser.name}</p>
-            <p>Phone: {editedUser.phone}</p>
-            <p>Picture: {editedUser.image}</p>
+            <em>שם: {editedUser.name}</em>
+            <em>טלפון: {editedUser.phone}</em>
+            <em>{editedUser.image}</em>
           </SaveDialog>
         ) : (
           <Button onClick={() => setEditMode(true)}>שינוי</Button>
