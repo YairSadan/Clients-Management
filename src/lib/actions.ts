@@ -130,6 +130,38 @@ export async function completeCompletedAppointments(): Promise<void> {
   });
 }
 
+export async function getUserAppointmentOwedFor(id: string): Promise<{
+  Appointment: {
+      id: string;
+      start: Date;
+      end: Date;
+      userId: string | null;
+      title: string;
+      completed: boolean;
+      payed: boolean;
+  }[];
+} | null> {
+  try {
+    const userAppointmentOwedFor = await prisma.user.findFirstOrThrow({
+      where: {
+        id,
+      },
+      select: {
+        Appointment: {
+          where: {
+            completed: true,
+            payed: false
+          },
+        },
+      },
+    });
+    return userAppointmentOwedFor;
+  } catch (error: any) {
+    console.log(error.message)
+  }
+  return null;
+}
+
 export async function getUsersOwedForAppointments(id: string): Promise<number> {
   await completeCompletedAppointments();
   try {
