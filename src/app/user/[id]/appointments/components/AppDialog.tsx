@@ -51,8 +51,8 @@ const AppDialog = ({
             <Button
               variant={'outline'}
               size={'icon'}
-              onClick={() => {
-                confirmClick(appointment);
+              onClick={async () => {
+                await confirmClick(appointment);
                 router.refresh();
               }}>
               <Check className="text-green-600" />

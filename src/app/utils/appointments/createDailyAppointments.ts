@@ -1,6 +1,6 @@
 import { createAvailableAppointment } from '@/lib/actions'
 
-const createDailyAppointments = () => {
+const createDailyAppointments = (): void => {
   const currentDate = new Date();
   const appointments = [];
 

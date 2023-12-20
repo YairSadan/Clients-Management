@@ -21,7 +21,7 @@ type Props = {
 };
 
 const Appointments = async ({ params }: Props) => {
-  const user: User | null = await findUserById(params.id);
+  const user: User = await findUserById(params.id);
   if (!user) throw new Error('No user');
 
   const availableAppointments: Appointment[] | null =
@@ -55,7 +55,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
             {myAppointments &&
               myAppointments.map((app) => (
                 <div
@@ -78,7 +78,7 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>תורים פנויים:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
             {availableAppointments &&
               availableAppointments.map((app) => (
                 <div

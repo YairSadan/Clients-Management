@@ -132,31 +132,18 @@ export async function completeCompletedAppointments(): Promise<void> {
 
 export async function getUsersOwedForAppointments(id: string): Promise<number> {
   await completeCompletedAppointments();
-  await prisma.user.aggregate({
-    where: {
-      id,
-    },
-    select: {
-      pricePerAppointment: true,
-      _count: {
-        select: {
-          Appointment: {
-            where: {
-              completed: true,
-              payed: false
-            },
-          },
-        }
-      }
-    },
-  })
   try {
-    const user: Prisma.AggregateUser = await prisma.user.findUniqueOrThrow({
+    const userWithAppointmentCount: {
+      pricePerAppointment: number;
+      _count: {
+          Appointment: number;
+      };
+  } = await prisma.user.findFirstOrThrow({
       where: {
         id,
       },
       select: {
-        pricePerAppointment: true,
+        pricePerAppointment: true, 
         _count: {
           select: {
             Appointment: {
@@ -165,17 +152,15 @@ export async function getUsersOwedForAppointments(id: string): Promise<number> {
                 payed: false
               },
             },
-          }
-        }
+          },
+        },
       },
-    })
-    console.log(user._count.Appointment)
-    return user.pricePerAppointment * user.Appointment.length
+    });
+    return userWithAppointmentCount.pricePerAppointment * userWithAppointmentCount._count.Appointment;
   } catch (error: any) {
     console.log(error.message)
   }
   return 0;
-
 }
 
 export async function addUserToAuthrizedUsers(
