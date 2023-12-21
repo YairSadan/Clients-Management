@@ -7,10 +7,8 @@ import LoginForm from './components/LoginForm';
 
 const Login = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
   if (session) {
     const user: User = await findUserByEmail(session.user.email);
-    console.log(user);
     user.role === Role.ADMIN
       ? redirect(`/admin/${user?.id}`)
       : redirect(`/user/${user?.id}`);
