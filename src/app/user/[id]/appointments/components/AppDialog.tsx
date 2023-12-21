@@ -36,12 +36,12 @@ const AppDialog = ({
       <DialogTrigger asChild>
         <Button>{btnContent}</Button>
       </DialogTrigger>
-      <DialogContent className="w-4/5">
+      <DialogContent className="w-4/5 flex flex-col items-center">
         <DialogHeader>
           <DialogTitle className="text-center">{appDate}</DialogTitle>
           <DialogDescription>{children}</DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex justify-center gap-5">
+        <DialogFooter className="gap-5">
           <DialogClose asChild>
             <Button variant={'outline'} size={'icon'}>
               <X className="text-red-600" />

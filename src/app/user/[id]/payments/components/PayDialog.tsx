@@ -26,14 +26,14 @@ const PayDialog = ({ btnContent, amountToPay, children, payClick }: Props) => {
       <DialogTrigger asChild>
         <Button>{btnContent}</Button>
       </DialogTrigger>
-      <DialogContent className="w-4/5">
+      <DialogContent className="w-4/5 flex flex-col items-center">
         <DialogHeader>
-          <DialogTitle className="text-center">
-            סכום לתשלום: {amountToPay}₪
-          </DialogTitle>
-          <DialogDescription>{children}</DialogDescription>
+          <DialogTitle>סכום לתשלום: {amountToPay}₪</DialogTitle>
+          <DialogDescription className="text-center">
+            {children}
+          </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex justify-center gap-5">
+        <DialogFooter className="gap-5">
           <DialogClose asChild>
             <Button variant={'outline'} size={'icon'}>
               <X className="text-red-600" />

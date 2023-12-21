@@ -33,8 +33,8 @@ const SaveDialog = ({
       <DialogTrigger asChild>
         <Button>{btnContent}</Button>
       </DialogTrigger>
-      <DialogContent className="w-4/5">
-        <DialogHeader className="flex flex-col gap-5">
+      <DialogContent className="w-4/5 flex flex-col gap-10 items-center">
+        <DialogHeader className="gap-5">
           <DialogTitle>
             <u>{childrenArray[0]}</u>
           </DialogTitle>
@@ -49,7 +49,7 @@ const SaveDialog = ({
             />
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex justify-center gap-5">
+        <DialogFooter className="gap-5">
           <DialogClose asChild>
             <Button variant={'outline'} size={'icon'} onClick={cancelClick}>
               <X className="text-red-600" />
