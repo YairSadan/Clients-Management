@@ -2,6 +2,7 @@
 import { Appointment, Prisma, Role, User } from '@prisma/client';
 import prisma from './prisma';
 import { getServerSession } from 'next-auth';
+import { UserWithAppoinments } from './types';
 
 export async function createAppointment(
   data: Prisma.AppointmentCreateInput
@@ -23,8 +24,8 @@ export async function createAvailableAppointment( start: string, end: string ): 
   });
 }
 
-export async function getAvailableAppointments(): Promise<Appointment[] | null> {
-  const appoinments: Appointment[] | null = await prisma.appointment.findMany({
+export async function getAvailableAppointments(): Promise<Appointment[]> {
+  const appointments: Appointment[] | null = await prisma.appointment.findMany({
     where: {
       start: {
         gt: new Date(),
@@ -33,7 +34,9 @@ export async function getAvailableAppointments(): Promise<Appointment[] | null> 
       completed: false,
     },
   });
-  return appoinments;
+  if (!appointments) throw new Error('Appointments were not found')
+
+  return appointments;
 }
 
 export async function deleteAppointment(id: string): Promise<void> {
@@ -68,17 +71,17 @@ export async function updateUser(
   });
 }
 
-export async function findUserById(id: string): Promise<User | null> {
+export async function findUserById(id: string): Promise<User> {
   const user = await prisma.user.findUnique({
     where: {
       id,
     },
   });
+  if (!user) throw new Error('User was not found');
   return user;
 }
 
-export async function getUserAppointments(id: string): Promise<Appointment[] | null> {
-  await completeCompletedAppointments();
+export async function getUserAppointments(id: string): Promise<Appointment[]> {
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
@@ -88,6 +91,7 @@ export async function getUserAppointments(id: string): Promise<Appointment[] | n
       completed: false
     },
   });
+  if (!appointments) throw new Error('Appointments were not found')
   return appointments;
 }
 
@@ -129,19 +133,68 @@ export async function completeCompletedAppointments(): Promise<void> {
   });
 }
 
-export async function getUsersOwedForAppointments(id: string): Promise<number> {
-  const appointments = await prisma.appointment.findMany({
-    where: {
-      userId: id,
-      start: {
-        lte: new Date(),
+export async function getUserAppointmentOwedFor(id: string): Promise<{
+  Appointment: {
+      id: string;
+      start: Date;
+      end: Date;
+      userId: string | null;
+      title: string;
+      completed: boolean;
+      payed: boolean;
+  }[];
+} | null> {
+  try {
+    const userAppointmentOwedFor = await prisma.user.findFirstOrThrow({
+      where: {
+        id,
       },
-    },
-  });
-  const appAmount = appointments.length
-  const user = await findUserById(id)
-  if (user?.pricePerAppointment) return user?.pricePerAppointment * appAmount
+      select: {
+        Appointment: {
+          where: {
+            completed: true,
+            payed: false
+          },
+        },
+      },
+    });
+    return userAppointmentOwedFor;
+  } catch (error: any) {
+    console.log(error.message)
+  }
+  return null;
+}
 
+export async function getUsersOwedForAppointments(id: string): Promise<number> {
+  await completeCompletedAppointments();
+  try {
+    const userWithAppointmentCount: {
+      pricePerAppointment: number;
+      _count: {
+          Appointment: number;
+      };
+  } = await prisma.user.findFirstOrThrow({
+      where: {
+        id,
+      },
+      select: {
+        pricePerAppointment: true, 
+        _count: {
+          select: {
+            Appointment: {
+              where: {
+                completed: true,
+                payed: false
+              },
+            },
+          },
+        },
+      },
+    });
+    return userWithAppointmentCount.pricePerAppointment * userWithAppointmentCount._count.Appointment;
+  } catch (error: any) {
+    console.log(error.message)
+  }
   return 0;
 }
 

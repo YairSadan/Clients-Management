@@ -21,14 +21,11 @@ type Props = {
 };
 
 const Appointments = async ({ params }: Props) => {
-  const user: User | null = await findUserById(params.id);
+  const user: User = await findUserById(params.id);
   if (!user) throw new Error('No user');
 
-  const availableAppointments: Appointment[] | null =
-    await getAvailableAppointments();
-  const myAppointments: Appointment[] | null = await getUserAppointments(
-    params.id
-  );
+  const availableAppointments: Appointment[] = await getAvailableAppointments();
+  const myAppointments: Appointment[] = await getUserAppointments(params.id);
 
   //SORTING FUNC
   const compareAppointments = (a: Appointment, b: Appointment) => {
@@ -55,8 +52,8 @@ const Appointments = async ({ params }: Props) => {
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
-            {myAppointments &&
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
+            {myAppointments.length > 0 ? (
               myAppointments.map((app) => (
                 <div
                   key={app.id}
@@ -68,19 +65,21 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={cancelApp}>
-                    <p>את/ה בטוח שתרצה/י לבטל את הפגישה?</p>
+                    את/ה בטוח שתרצה/י לבטל את הפגישה?
                   </AppDialog>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="text-center">אין פגישות עתידיות</div>
+            )}
           </div>
         </div>
         <div className="w-3/5">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>תורים פנויים:</u>
           </h2>
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
-            {/* example*/}
-            {availableAppointments &&
+          <div className="flex flex-col gap-2 overflow-y-auto h-[35vh]">
+            {availableAppointments.length > 0 ? (
               availableAppointments.map((app) => (
                 <div
                   key={app.id}
@@ -92,12 +91,13 @@ const Appointments = async ({ params }: Props) => {
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={confirmApp}>
-                    <p>
-                      Are you sure that you would like to book this appointment?
-                    </p>
+                    את/ה בטוח/ה שתרצה/י לקבוע את הפגישה?
                   </AppDialog>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div>אין פגישות עתידיות פנויות</div>
+            )}
           </div>
         </div>
       </main>
