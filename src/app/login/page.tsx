@@ -10,8 +10,8 @@ const Login = async () => {
   if (session) {
     const user: User = await findUserByEmail(session.user.email);
     user.role === Role.ADMIN
-      ? redirect(`/admin/${user?.id}`)
-      : redirect(`/user/${user?.id}`);
+      ? redirect(`/admin/${user.id}`)
+      : redirect(`/user/${user.id}`);
   }
   return (
     !session && (
