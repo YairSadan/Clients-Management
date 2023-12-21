@@ -24,8 +24,8 @@ export async function createAvailableAppointment( start: string, end: string ): 
   });
 }
 
-export async function getAvailableAppointments(): Promise<Appointment[] | null> {
-  const appoinments: Appointment[] | null = await prisma.appointment.findMany({
+export async function getAvailableAppointments(): Promise<Appointment[]> {
+  const appointments: Appointment[] | null = await prisma.appointment.findMany({
     where: {
       start: {
         gt: new Date(),
@@ -34,7 +34,9 @@ export async function getAvailableAppointments(): Promise<Appointment[] | null> 
       completed: false,
     },
   });
-  return appoinments;
+  if (!appointments) throw new Error('Appointments were not found')
+
+  return appointments;
 }
 
 export async function deleteAppointment(id: string): Promise<void> {
@@ -79,7 +81,7 @@ export async function findUserById(id: string): Promise<User> {
   return user;
 }
 
-export async function getUserAppointments(id: string): Promise<Appointment[] | null> {
+export async function getUserAppointments(id: string): Promise<Appointment[]> {
   const appointments = await prisma.appointment.findMany({
     where: {
       userId: id,
@@ -89,6 +91,7 @@ export async function getUserAppointments(id: string): Promise<Appointment[] | n
       completed: false
     },
   });
+  if (!appointments) throw new Error('Appointments were not found')
   return appointments;
 }
 
