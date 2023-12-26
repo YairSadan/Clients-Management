@@ -3,7 +3,7 @@ import React from 'react';
 import AppDialog from './components/AppDialog';
 import {
   bookAppoinment,
-  cancelAppointment,
+  // cancelAppointment,
   findUserById,
   getAvailableAppointments,
   getUserAppointments,
@@ -44,7 +44,7 @@ const Appointments = async ({ params }: Props) => {
   };
   const cancelApp = async (appointment: Appointment) => {
     'use server';
-    cancelAppointment(appointment);
+    // cancelAppointment(appointment);
   };
 
   return (

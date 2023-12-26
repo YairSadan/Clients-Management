@@ -1,4 +1,4 @@
-import { createAvailableAppointment } from '@/lib/actions'
+// import { createAvailableAppointment } from '@/lib/actions'
 
 const createDailyAppointments = () => {
   const currentDate = new Date();
@@ -21,7 +21,7 @@ const createDailyAppointments = () => {
   }
 
   appointments.forEach((appointment) => {
-    createAvailableAppointment(appointment.start, appointment.end);
+    // createAvailableAppointment(appointment.start, appointment.end);
   });
 };
 

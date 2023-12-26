@@ -57,7 +57,6 @@ const AddClientForm: React.FC<AddClientFormProps> = ({ setOpen }) => {
    const message = await addUserToAuthrizedUsers(values);
     setOpen(false);
     toast({
-      title: 'הלקוח נוסף בהצלחה',
       description: message,
     });
   };

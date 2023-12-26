@@ -69,7 +69,7 @@ const ScheduleCalendar: React.FC = ({}) => {
       setDbAppointments(await fetchAppointments());
       setClients(await fetchClients());
     })();
-  }, []); // can be reduced to only when the popup turns false
+  }, [popupOpen]); // can be reduced to only when the popup turns false
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
@@ -87,7 +87,7 @@ const ScheduleCalendar: React.FC = ({}) => {
   const handleSelectClient = useCallback((id: string, name: string | null) => {
     setAppointment((prev) => ({
       ...prev,
-      user: id ? { connect: { id } } : undefined,
+      user: id ? { connect: { id } } : {connect: {id: 'clqdqubc3000012k1biei05lh'}}, //TODO: change to admin id based on session
       title: name ? name : 'אחר',
     }));
   }, []);

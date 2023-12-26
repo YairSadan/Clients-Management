@@ -27,7 +27,7 @@ const UserDetails = ({ user }: Props) => {
 
   const saveChanges = async () => {
     if (user?.id) {
-      updateUser(user?.id, editedUser); // update in the DB
+      // updateUser(user?.id, editedUser); // update in the DB
     }
     router.replace(`/${pathNameSegments[1]}/${pathNameSegments[2]}`);
 

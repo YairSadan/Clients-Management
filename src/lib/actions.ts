@@ -12,16 +12,16 @@ export async function createAppointment(
   return appointment;
 }
 
-export async function createAvailableAppointment( start: string, end: string ): Promise<void> {
-  await prisma.appointment.create({
-    data: {
-      start: start,
-      end: end,
-      title: '',
-      completed: false,
-    }
-  });
-}
+// export async function createAvailableAppointment( start: string, end: string ): Promise<void> {
+//   await prisma.appointment.create({
+//     data: {
+//       start: start,
+//       end: end,
+//       title: '',
+//       completed: false,
+//     }
+//   });
+// }
 
 export async function getAvailableAppointments(): Promise<Appointment[] | null> {
   const appoinments: Appointment[] | null = await prisma.appointment.findMany({
@@ -103,17 +103,17 @@ export async function bookAppoinment(user: User, appointment: Appointment): Prom
   });
 }
 
-export async function cancelAppointment(appointment: Appointment): Promise<void> {
-  await prisma.appointment.update({
-    where: {
-      id: appointment.id,
-    },
-    data: {
-      userId: null,
-      title: '',
-    }
-  });
-}
+// export async function cancelAppointment(appointment: Appointment): Promise<void> {
+//   await prisma.appointment.update({
+//     where: {
+//       id: appointment.id,
+//     },
+//     data: {
+//       userId: null,
+//       title: '',
+//     }
+//   });
+// }
 
 export async function completeCompletedAppointments(): Promise<void> {
   await prisma.appointment.updateMany({
@@ -162,10 +162,12 @@ export async function addUserToAuthrizedUsers(
   try {
     await prisma.authrizedPool.create({
       data,
-    });
-    
+    }); 
   } catch (error: any) {
-    return error.message;
+    if (error.code === 'P2002') 
+      return 'לקוח זה כבר קיים במערכת';
+    else 
+      return error.message;
   }
-  return 'success';
+  return 'הלקוח נוסף בהצלחה';
 }
