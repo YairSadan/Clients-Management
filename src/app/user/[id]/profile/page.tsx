@@ -1,8 +1,7 @@
 import React from 'react';
-import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import { User } from '@prisma/client';
 import UserDetails from './components/UserDetails';
-import { findUserById } from '@/lib/actions';
+import { getUserById } from '@/data/user';
 
 type Props = {
   params: {
@@ -11,10 +10,9 @@ type Props = {
 };
 
 const UserProfile = async ({ params }: Props) => {
-  const user: User | null = await findUserById(params.id);
+  const user = await getUserById(params.id);
   return (
     <>
-      <HomeSvg />
       <main className="page-primary justify-center">
         <UserDetails user={user} />
       </main>

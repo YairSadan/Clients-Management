@@ -1,11 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id                    String                 @id @default(cuid())
+  name                  String?
+  email                 String?                @unique
+  emailVerified         DateTime?
+  image                 String?
+  password              String?
+  role                  UserRole               @default(USER)
+  isTwoFactorEnabled    Boolean                @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
+  fundingSource         String?
+  notes                 String?
+  phone                 String?                @unique
+  pricePerAppointment   Int?
+  accounts              Account[]
+  Appointment           Appointment[]
 }
 
 model Account {
@@ -21,51 +46,10 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id                  String        @id @default(cuid())
-  name                String?
-  email               String        @unique
-  emailVerified       DateTime?
-  image               String?
-  role                Role          @default(CLIENT)
-  fundingSource       String?
-  notes               String?
-  phone               String        @unique
-  pricePerAppointment Int
-  accounts            Account[]
-  Appointment         Appointment[]
-  sessions            Session[]
-}
-
-model AuthrizedPool {
-  email               String  @unique
-  phone               String  @unique
-  fundingSource       String?
-  id                  String  @id @default(cuid())
-  name                String
-  notes               String?
-  pricePerAppointment Int
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
 }
 
 model Appointment {
@@ -78,7 +62,37 @@ model Appointment {
   user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum Role {
-  ADMIN
-  CLIENT
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
 }

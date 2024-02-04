@@ -8,13 +8,13 @@ const Options = () => {
   const pathName = usePathname();
   return (
     <>
-      <Button size={'optionButton'} asChild>
+      <Button size={'lg'} asChild>
         <Link href={`${pathName}/appointments`}>לקבוע/לבטל תור</Link>
       </Button>
-      <Button size={'optionButton'} asChild>
+      <Button size={'lg'} asChild>
         <Link href={`${pathName}/payments`}>לשלם</Link>
       </Button>
-      <Button size={'optionButton'} asChild>
+      <Button size={'lg'} asChild>
         <Link href={`${pathName}/profile`}>פרופיל</Link>
       </Button>
     </>

@@ -10,7 +10,8 @@ import {
   DialogHeader,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Check, X } from 'lucide-react';
+import { CheckCircledIcon } from '@radix-ui/react-icons';
+import { Icon } from '@radix-ui/react-select';
 import Image from 'next/image';
 import React from 'react';
 
@@ -52,7 +53,7 @@ const SaveDialog = ({
         <DialogFooter>
           <DialogClose className="flex justify-center gap-5">
             <Button variant={'outline'} size={'icon'} onClick={cancelClick}>
-              <X className="text-red-600" />
+              <Icon className="text-red-600" />
             </Button>
             <Button
               variant={'outline'}
@@ -60,7 +61,7 @@ const SaveDialog = ({
               onClick={() => {
                 saveClick();
               }}>
-              <Check className="text-green-600" />
+              <CheckCircledIcon className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>

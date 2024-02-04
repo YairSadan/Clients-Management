@@ -5,7 +5,6 @@ import { User } from '@prisma/client';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import SaveDialog from './SaveDialog';
-import { updateUser } from '@/lib/actions';
 import { usePathname, useRouter } from 'next/navigation';
 
 type Props = {
@@ -46,7 +45,7 @@ const UserDetails = ({ user }: Props) => {
               setEditedUser((prev) => ({ ...prev, name: e.target.value }))
             }
           />
-          <Input disabled type="email" placeholder="Email" value={user.email} />
+          {/* <Input disabled type="email" placeholder="Email" value={user.email} />
           <Input
             disabled={!editMode}
             type="text"
@@ -55,7 +54,7 @@ const UserDetails = ({ user }: Props) => {
             onChange={(e) =>
               setEditedUser((prev) => ({ ...prev, phone: e.target.value }))
             }
-          />
+          /> */}
           <Image
             src={user.image || ''}
             width={100}

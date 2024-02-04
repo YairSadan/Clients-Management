@@ -1,18 +1,7 @@
-import HomeSvg from '@/app/ui/globalComponents/HomeSvg';
 import React from 'react';
 import AppDialog from './components/AppDialog';
-import {
-  bookAppoinment,
-  // cancelAppointment,
-  findUserById,
-  getAvailableAppointments,
-  getUserAppointments,
-} from '@/lib/actions';
-import { Appointment, User } from '@prisma/client';
-import {
-  ConvertDateToWhen,
-  ConvertToWordDate,
-} from '@/app/utils/dates/DateConverter';
+import { getUserById } from '@/data/user';
+import { Appointment } from '@prisma/client';
 
 type Props = {
   params: {
@@ -21,36 +10,32 @@ type Props = {
 };
 
 const Appointments = async ({ params }: Props) => {
-  const user: User | null = await findUserById(params.id);
+  const user = await getUserById(params.id);
   if (!user) throw new Error('No user');
 
-  const availableAppointments: Appointment[] | null =
-    await getAvailableAppointments();
-  const myAppointments: Appointment[] | null = await getUserAppointments(
-    params.id
-  );
+  // const availableAppointments: Appointment[] | null = await getAvailableAppointments();
+  // const myAppointments: Appointment[] | null = await getUserAppointments(params.id);
 
-  //SORTING FUNC
-  const compareAppointments = (a: Appointment, b: Appointment) => {
-    return new Date(a.start).getTime() - new Date(b.start).getTime();
-  };
-  // Sort myAppointments and availableAppointments
-  myAppointments?.sort(compareAppointments);
-  availableAppointments?.sort(compareAppointments);
+  // //SORTING FUNC
+  // const compareAppointments = (a: Appointment, b: Appointment) => {
+  //   return new Date(a.start).getTime() - new Date(b.start).getTime();
+  // };
+  // // Sort myAppointments and availableAppointments
+  // myAppointments?.sort(compareAppointments);
+  // availableAppointments?.sort(compareAppointments);
 
-  const confirmApp = async (appointment: Appointment) => {
-    'use server';
-    bookAppoinment(user, appointment);
-  };
-  const cancelApp = async (appointment: Appointment) => {
-    'use server';
-    // cancelAppointment(appointment);
-  };
+  // const confirmApp = async (appointment: Appointment) => {
+  //   'use server';
+  //   bookAppoinment(user, appointment);
+  // };
+  // const cancelApp = async (appointment: Appointment) => {
+  //   'use server';
+  //   // cancelAppointment(appointment);
+  // };
 
   return (
     <>
-      <main className="page-primary justify-center gap-9">
-        <HomeSvg />
+      {/* <main className="page-primary justify-center gap-9">
         <div className="w-3/5">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             <u>התורים שלך:</u>
@@ -61,8 +46,7 @@ const Appointments = async ({ params }: Props) => {
                 <div
                   key={app.id}
                   className="bg-orange-900 rounded-md flex items-center justify-between p-2">
-                  {ConvertToWordDate(app.start, true)} -{' '}
-                  {ConvertToWordDate(app.end, false)}
+                  {ConvertToWordDate(app.start, true)} - {ConvertToWordDate(app.end, false)}
                   <AppDialog
                     btnContent={'בטל'}
                     appointment={app}
@@ -80,27 +64,24 @@ const Appointments = async ({ params }: Props) => {
           </h2>
           <div className="flex flex-col gap-2 overflow-y-auto max-h-[35vh]">
             {/* example*/}
-            {availableAppointments &&
+            {/* {availableAppointments &&
               availableAppointments.map((app) => (
                 <div
                   key={app.id}
                   className="bg-orange-900 rounded-md flex items-center justify-between p-2">
-                  {ConvertToWordDate(app.start, true)} -{' '}
-                  {ConvertToWordDate(app.end, false)}
+                  {ConvertToWordDate(app.start, true)} - {ConvertToWordDate(app.end, false)}
                   <AppDialog
                     btnContent={'קבע'}
                     appointment={app}
                     appDate={ConvertDateToWhen(app.start)}
                     confirmClick={confirmApp}>
-                    <p>
-                      Are you sure that you would like to book this appointment?
-                    </p>
-                  </AppDialog>
-                </div>
+                    <p>Are you sure that you would like to book this appointment?</p>
+                  </AppDialog> */}
+                {/* </div>
               ))}
           </div>
         </div>
-      </main>
+      </main> */}
     </>
   );
 };

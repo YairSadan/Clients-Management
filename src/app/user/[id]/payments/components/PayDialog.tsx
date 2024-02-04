@@ -10,8 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { CheckCircledIcon } from '@radix-ui/react-icons';
+import { Icon } from '@radix-ui/react-select';
 import React from 'react';
-import { Check, X } from 'lucide-react';
 
 type Props = {
   btnContent: string;
@@ -36,7 +37,7 @@ const PayDialog = ({ btnContent, amountToPay, children, payClick }: Props) => {
         <DialogFooter>
           <DialogClose className="flex justify-center gap-5">
             <Button variant={'outline'} size={'icon'}>
-              <X className="text-red-600" />
+              <Icon className="text-red-600" />
             </Button>
             <Button
               variant={'outline'}
@@ -44,7 +45,7 @@ const PayDialog = ({ btnContent, amountToPay, children, payClick }: Props) => {
               onClick={() => {
                 payClick(amountToPay);
               }}>
-              <Check className="text-green-600" />
+              <CheckCircledIcon className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>

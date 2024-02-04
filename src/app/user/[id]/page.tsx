@@ -1,8 +1,6 @@
 import React from 'react';
 import Options from '../components/Options';
-import LogoutBtn from '@/app/ui/globalComponents/LogoutBtn';
-import { findUserById } from '@/lib/actions';
-import { User } from '@prisma/client';
+import { getUserById } from '@/data/user';
 
 type Props = {
   params: {
@@ -11,7 +9,7 @@ type Props = {
 };
 
 const ClientHomePage = async ({ params }: Props) => {
-  const user: User | null = await findUserById(params.id);
+  const user = await getUserById(params.id);
   return (
     user && (
       <main className="page-primary justify-around">
@@ -26,7 +24,6 @@ const ClientHomePage = async ({ params }: Props) => {
           </h3>
           <Options />
         </div>
-        <LogoutBtn />
       </main>
     )
   );

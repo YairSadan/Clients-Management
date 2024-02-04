@@ -12,7 +12,8 @@ import {
 } from '@/components/ui/dialog';
 import React from 'react';
 import Image from 'next/image';
-import { Check, X } from 'lucide-react';
+import { Icon } from '@radix-ui/react-select';
+import { CheckCircledIcon } from '@radix-ui/react-icons';
 
 type Props = {
   btnContent: string;
@@ -78,11 +79,11 @@ const ClientDialog = ({
           <DialogClose className="flex justify-center gap-5">
             {cancelClick ? (
               <Button variant={'outline'} size={'icon'} onClick={cancelClick}>
-                <X className="h-8 w-8 text-red-600" />
+                <Icon className="h-8 w-8 text-red-600" />
               </Button>
             ) : (
               <Button variant={'outline'} size={'icon'}>
-                <X className="h-8 w-8 text-red-600" />
+                <Icon className="h-8 w-8 text-red-600" />
               </Button>
             )}
             <Button
@@ -94,7 +95,7 @@ const ClientDialog = ({
                 if (saveClick) saveClick();
                 if (amountToPay && payClick) payClick(amountToPay);
               }}>
-              <Check className="w-8 h-8 text-green-600" />
+              <CheckCircledIcon className="w-8 h-8 text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>

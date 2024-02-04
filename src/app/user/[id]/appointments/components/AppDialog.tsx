@@ -11,9 +11,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import React from 'react';
-import { Check, X } from 'lucide-react';
 import { Appointment } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { CheckCircledIcon } from '@radix-ui/react-icons';
+import { Icon } from '@radix-ui/react-select';
 
 type Props = {
   btnContent: string;
@@ -44,7 +45,7 @@ const AppDialog = ({
         <DialogFooter>
           <DialogClose className="flex justify-center gap-5">
             <Button variant={'outline'} size={'icon'}>
-              <X className="text-red-600" />
+              <Icon className="text-red-600" />
             </Button>
             <Button
               variant={'outline'}
@@ -53,7 +54,7 @@ const AppDialog = ({
                 confirmClick(appointment);
                 router.refresh();
               }}>
-              <Check className="text-green-600" />
+              <CheckCircledIcon className="text-green-600" />
             </Button>
           </DialogClose>
         </DialogFooter>
