@@ -13,10 +13,8 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
       <FormError message="You do not have permission to view this content!" />
     );
   return (
-    <div className="relative h-full w-full flex flex-col gap-y-10 items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
-      <div className="absolute top-0 w-4/5">
-        <Navbar />
-      </div>
+    <div className="h-full w-full flex flex-col">
+      <Navbar />
       {children}
     </div>
   );
